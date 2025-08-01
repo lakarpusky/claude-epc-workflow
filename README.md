@@ -40,9 +40,9 @@ Follow EPC typescript to build type-safe event system
 
 ## Exmaple Output
 
-Explore: O(n) search, memory leak, 3s blocking
-Plan: Map lookup, WeakMap cache, Web Worker
-Code: userSearch.js, searchWorker.js, 3s→50ms
+1. Explore: O(n) search, memory leak, 3s blocking
+2. Plan: Map lookup, WeakMap cache, Web Worker
+3. Code: userSearch.js, searchWorker.js, 3s→50ms
 
 ## Philosophy
 
