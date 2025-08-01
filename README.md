@@ -47,4 +47,4 @@ Follow EPC typescript to build type-safe event system
 ## Philosophy
 
 Real engineering is about solving production problems with elegant, performant code. 
-These agents understand legacy constraints, performance budgets, and incremental refactoring - not just greenfield ideals.
+These agents understand legacy constraints, performance budgets, and incremental refactoring.
