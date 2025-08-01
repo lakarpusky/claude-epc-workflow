@@ -1,6 +1,6 @@
 # Claude EPC Workflow
 
-Engineering agents for Claude Code to deliver Senioer-level JavaScript and React solutions with minimal token usage.
+Engineering agents for Claude Code to deliver Senior-level JavaScript and React solutions with minimal token usage.
 
 ## What is EPC?
 
