@@ -7,6 +7,7 @@ Engineering agents for Claude Code to deliver Senior-level JavaScript and React 
 EPC (Explore → Plan → Code) is a structured workflow using two specialized agents:
 - **js-specialist**: JavaScript/TypeScript algorithms, performance, and architecture
 - **react-virtuoso**: React components, state management, and UI optimization
+- **git-wizard**: Git workflows, commits, conflicts, version control
 
 ## Key Features
 
