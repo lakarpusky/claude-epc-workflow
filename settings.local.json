@@ -5,7 +5,6 @@
       "Bash(rmdir:*)",
       "Bash(true)",
       "Bash(npm run build:*)",
-      "Bash(NODE_OPTIONS=\"--openssl-legacy-provider\" npm run build)",
       "Bash(ls:*)",
       "Bash(test:*)",
       "Bash(cat:*)",
