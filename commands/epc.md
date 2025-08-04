@@ -8,7 +8,8 @@ description: Streamlined elite JavaScript/React workflow using specialized agent
 ## Agents
 
 - **js-specialist**: JavaScript/TypeScript logic, algorithms, services, architecture
-- **react-virtuoso**: React components, performance, state management, rendering, UI/UX
+- **react-virtuoso**: React components, performance, state management, UI/UX
+- **git-wizard**: Git workflows, commits, conflicts, version control
 
 ## Core Principles
 - Agents write code directly to files
