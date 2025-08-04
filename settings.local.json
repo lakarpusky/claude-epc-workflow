@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv:*)",
+      "Bash(rmdir:*)",
+      "Bash(true)",
+      "Bash(npm run build:*)",
+      "Bash(NODE_OPTIONS=\"--openssl-legacy-provider\" npm run build)",
+      "Bash(ls:*)",
+      "Bash(test:*)",
+      "Bash(cat:*)",
+      "Bash(git add:*)",
+      "Bash(git rebase:*)",
+      "Bash(git merge-base:*)",
+      "Bash(git merge:*)",
+      "Bash(git commit:*)",
+      "Read(~/.zshrc)"
+    ],
+    "deny": [
+      "Bash(curl:*)",
+      "Bash(npm run dev:*)",
+      "Bash(op: *)",
+      "Bash(git push:*)",
+      "Bash(rm -rf: *)"
+    ]
+  }
+}
