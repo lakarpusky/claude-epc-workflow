@@ -35,7 +35,7 @@ Module structure, patterns, trade-offs (bullet points only)
 ## Usage
 
 ```
-Follow EPC [workflow mode] [language mode] to [task]
+/epc [workflow mode] [language mode] to [task]
 ```
 
 Workflow modes: `standard` (default), `quick`, `architect`
@@ -45,7 +45,7 @@ Language modes: `javascript` (default), `typescript`
 
 **Standard Mode (Default - Concise)**
 ```
-Follow EPC to optimize user search timing out with 50k users
+/epc optimize user search timing out with 50k users
 
 Explore: O(n) search, memory leak, 3s blocking
 Plan: Map lookup, WeakMap, Web Worker
@@ -54,7 +54,7 @@ Code: userSearch.js, searchWorker.js, 3s→50ms
 
 **Quick Mode**
 ```
-Follow EPC quick to add infinite scroll
+/epc quick mode to add infinite scroll
 
 ProductList.jsx: Added intersection observer, virtual list, 20 items/scroll
 useInfiniteScroll.js: Reusable hook with cleanup
@@ -62,7 +62,7 @@ useInfiniteScroll.js: Reusable hook with cleanup
 
 **Architect Mode**
 ```
-Follow EPC architect to restructure dashboard.js (3000 lines)
+/epc architect mode to restructure dashboard.js (3000 lines)
 
 Current: Monolithic file, mixed concerns
 Proposed:
@@ -75,7 +75,7 @@ Migration: Start data layer, no breaking changes
 
 **TypeScript Mode**
 ```
-Follow EPC typescript to build type-safe event emitter
+/epc typescript mode to build type-safe event emitter
 
 Explore: Need strict event typing with autocomplete
 Plan: Generic EventMap, typed emit/on/off, class for inference
@@ -84,7 +84,7 @@ Code: EventEmitter.ts (generics), types.ts (event map)
 
 **Combined Modes**
 ```
-Follow EPC quick typescript to add retry logic
+/epc quick typescript mode to add retry logic
 
 apiClient.ts: Exponential backoff, AbortSignal support
 Chose recursion over loop: cleaner async flow
