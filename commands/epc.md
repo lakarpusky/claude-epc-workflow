@@ -12,10 +12,13 @@ description: Streamlined elite JavaScript/React workflow using specialized agent
 - **git-wizard**: Git workflows, commits, conflicts, version control
 
 ## Core Principles
-- Agents write code directly to files
-- Console output is summaries only (no code)
+- Agents write code directly to files, no code in responses
+- Console output is summaries only, no code in responses
+- Provide summaries only, no code in responses
 - JavaScript is default, TypeScript on request
 - Concise mode is default
+- Focus on outcome and impact
+- No code snippets in responses
 
 ## Workflow Modes
 
@@ -35,7 +38,7 @@ Module structure, patterns, trade-offs (bullet points only)
 ## Usage
 
 ```
-/epc [workflow mode] [language mode] to [task]
+Follow EPC [workflow mode] [language mode] to [task]
 ```
 
 Workflow modes: `standard` (default), `quick`, `architect`
@@ -45,7 +48,7 @@ Language modes: `javascript` (default), `typescript`
 
 **Standard Mode (Default - Concise)**
 ```
-/epc optimize user search timing out with 50k users
+Follow EPC to optimize user search timing out with 50k users
 
 Explore: O(n) search, memory leak, 3s blocking
 Plan: Map lookup, WeakMap, Web Worker
@@ -54,7 +57,7 @@ Code: userSearch.js, searchWorker.js, 3s→50ms
 
 **Quick Mode**
 ```
-/epc quick mode to add infinite scroll
+Follow EPC quick to add infinite scroll
 
 ProductList.jsx: Added intersection observer, virtual list, 20 items/scroll
 useInfiniteScroll.js: Reusable hook with cleanup
@@ -62,7 +65,7 @@ useInfiniteScroll.js: Reusable hook with cleanup
 
 **Architect Mode**
 ```
-/epc architect mode to restructure dashboard.js (3000 lines)
+Follow EPC architect to restructure dashboard.js (3000 lines)
 
 Current: Monolithic file, mixed concerns
 Proposed:
@@ -75,7 +78,7 @@ Migration: Start data layer, no breaking changes
 
 **TypeScript Mode**
 ```
-/epc typescript mode to build type-safe event emitter
+Follow EPC typescript to build type-safe event emitter
 
 Explore: Need strict event typing with autocomplete
 Plan: Generic EventMap, typed emit/on/off, class for inference
@@ -84,7 +87,7 @@ Code: EventEmitter.ts (generics), types.ts (event map)
 
 **Combined Modes**
 ```
-/epc quick typescript mode to add retry logic
+Follow EPC quick typescript to add retry logic
 
 apiClient.ts: Exponential backoff, AbortSignal support
 Chose recursion over loop: cleaner async flow
