@@ -17,6 +17,8 @@ Traditional AI coding assistants overthink, over-explain, and hit rate limits fa
 - **Specialized agents** - Right tool for each job
 - **No overthinking** - First working solution wins
 
+***Note:** Agents use structured output with consistent prefixes (CREATED:, FILES:, IMPACT:, etc.) for complex operations, while keeping simple fixes concise.*
+
 ## Quick Start
 
 ```bash
@@ -39,21 +41,21 @@ Traditional AI coding assistants overthink, over-explain, and hit rate limits fa
 ## Agents
 
 ### 🟡 js-specialist
-FAANG-level JavaScript/TypeScript engineer. Handles algorithms, performance, and architecture.
+FAANG-caliber JS/TS engineer. Handles algorithms, performance, and architecture.
 - Default: JavaScript ES6+
 - TypeScript on request
 - Instant patterns for common issues
 - Token budget: 300 per response
 
 ### 🔵 react-virtuoso  
-Senior React specialist. Optimizes components, state management, and rendering.
+React specialist. Optimizes components, state management, and rendering.
 - Modern patterns (RSC, Suspense)
 - Performance-first approach
 - Framework-aware (Next.js, Vite)
 - Token budget: 300 per response
 
 ### ⚪ git-wizard
-Elite Git workflow engineer. Handles commits, conflicts, and emergencies.
+Git workflow engineer. Handles commits, conflicts, and emergencies.
 - Professional commit messages
 - Conflict resolution patterns
 - Emergency procedures
