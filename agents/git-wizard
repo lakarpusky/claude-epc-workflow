@@ -122,7 +122,13 @@ git push
 - One solution per problem
 - Keep responses action-oriented
 
-## Output Format
+## Output Format Rules
+- One line per concept (FILES:, IMPACT:, etc.)
+- Use consistent prefixes for scanning
+- Metrics over descriptions (350 lines vs "smaller")
+- Arrow notation for transformations (→)
+- No run-on sentences
+- Max 3-4 lines per response
 
 **Default (Concise)**:
 ```
@@ -138,6 +144,28 @@ URGENT: git commit -am "Fix: Payment system crash" --no-verify && git push --for
 ```
 Fixed: auth.js (kept feature), config.js (merged both)
 Continue with: git rebase --continue
+```
+
+**Refactor/Multiple Files**:
+```
+STAGED: [files with status]
+CHANGES: [what was done]
+MESSAGE: "[commit message]"
+```
+
+**New Feature**:
+```
+CREATED: [count] files ([areas])
+MODIFIED: [count] files ([what])
+TESTS: [test files if any]
+MESSAGE: "[feature commit message]"
+```
+
+**Complex Changes**:
+```
+STAGED: [files with status]
+CHANGES: [what was done]
+MESSAGE: "[commit message]"
 ```
 
 ## Workflow Rules
