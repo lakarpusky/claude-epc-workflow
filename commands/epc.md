@@ -14,26 +14,56 @@ description: Streamlined elite JavaScript/React workflow using specialized agent
 ## Core Principles
 - Agents write code directly to files, no code in responses
 - Console output is summaries only, no code in responses
-- Provide summaries only, no code in responses
 - JavaScript is default, TypeScript on request
-- Concise mode is default
-- Focus on outcome and impact
-- No code snippets in responses
+- Concise mode is default (under 300 tokens)
+- Pattern match before analyzing
+- No overthinking - first solution that works
+
+## Token Management
+- DEFAULT: Each phase under 100 tokens
+- Total workflow: Under 300 tokens
+- Use instant patterns before analysis
+- Override with "analyze" or "detailed" keywords
 
 ## Workflow Modes
 
 ### Standard: Explore → Plan → Code
-Complete workflow with concise output
+**Token Budget: 300 total (100 per phase)**
+- Explore: Identify bottleneck/issue (pattern match first)
+- Plan: Direct solution, no alternatives
+- Code: Execute and summarize impact
 
 ### Quick: Direct to Code
-Skip exploration for straightforward tasks
+**Token Budget: 100 total**
+- Skip exploration for obvious patterns
+- Apply instant fix
+- Report metrics only
 
 ### Architect: Structural Decisions
-Module structure, patterns, trade-offs (bullet points only)
+**Token Budget: 200 total**
+- Module structure only
+- Bullet points, no explanations
+- Trade-offs only if critical
+
+### Emergency: Production Fix
+**Token Budget: 50 total**
+- Triggered by "emergency" or "production down"
+- Fastest fix, skip all analysis
+- Revert or patch only
 
 ## Language Modes
 - **Default**: JavaScript (clean ES6+)
 - **TypeScript**: Add `typescript` to command
+
+## Instant Patterns (No Exploration Needed)
+```
+Slow list → Quick mode → React.memo
+Merge conflict → Quick mode → git-wizard
+Memory leak → Quick mode → WeakMap
+Prop drilling → Quick mode → Context
+Bundle too big → Quick mode → lazy load
+Type errors → Quick mode → optional chaining
+```
 
 ## Usage
 
@@ -41,8 +71,35 @@ Module structure, patterns, trade-offs (bullet points only)
 Follow EPC [workflow mode] [language mode] to [task]
 ```
 
-Workflow modes: `standard` (default), `quick`, `architect`
+Workflow modes: `standard` (default), `quick`, `architect`, `emergency`
 Language modes: `javascript` (default), `typescript`
+
+## Override Dictionary
+- "analyze"/"detailed" → Structured analysis (max +200 tokens)
+- "explain" → Add Why: and Impact: lines (max +50 tokens)
+- "debug" → Add console logs
+- "emergency" → Skip all checks, fastest fix
+- "all files" → Bulk operations allowed
+
+### "explain" Format (50 tokens):
+```
+Action: git rebase -i HEAD~3
+Why: Squash typo fixes before PR
+Impact: 5 commits→2, cleaner history
+```
+
+### "analyze" Format (200 tokens):
+```
+ANALYSIS: Bundle size
+━━━━━━━━━━━━━━━━━━━━━━━━
+Current: 2.4MB (gzipped: 680KB)
+Largest: three.js (1.2MB)
+Unused: 60% of lodash
+Tree-shaking: Broken
+━━━━━━━━━━━━━━━━━━━━━━━━
+Fix: Dynamic imports, cherry-pick lodash
+Result: 2.4MB→800KB
+```
 
 ## Examples
 
@@ -50,51 +107,83 @@ Language modes: `javascript` (default), `typescript`
 ```
 Follow EPC to optimize user search timing out with 50k users
 
-Explore: O(n) search, memory leak, 3s blocking
-Plan: Map lookup, WeakMap, Web Worker
-Code: userSearch.js, searchWorker.js, 3s→50ms
+Explore: O(n) search, 3s blocking
+Plan: Map lookup, Web Worker
+Code: userSearch.js, 3s→50ms
 ```
 
-**Quick Mode**
+**Quick Mode (Pattern Match)**
 ```
-Follow EPC quick to add infinite scroll
+Follow EPC quick to fix "Cannot read property 'map' of undefined"
 
-ProductList.jsx: Added intersection observer, virtual list, 20 items/scroll
-useInfiniteScroll.js: Reusable hook with cleanup
+Applied: Optional chaining to all array maps
+Files: 3 components updated
 ```
 
 **Architect Mode**
 ```
 Follow EPC architect to restructure dashboard.js (3000 lines)
 
-Current: Monolithic file, mixed concerns
-Proposed:
-→ /widgets (components)
-→ /data (API, transforms)
-→ /hooks (business logic)
-→ /utils (helpers)
-Migration: Start data layer, no breaking changes
+Structure:
+→ /widgets
+→ /data  
+→ /hooks
+→ /utils
+Start: data layer
+```
+
+**Emergency Mode**
+```
+Follow EPC emergency to fix payment crash
+
+Reverted: commit a3f2b1
+Deployed: hotfix
 ```
 
 **TypeScript Mode**
 ```
-Follow EPC typescript to build type-safe event emitter
+Follow EPC typescript to add types to API client
 
-Explore: Need strict event typing with autocomplete
-Plan: Generic EventMap, typed emit/on/off, class for inference
-Code: EventEmitter.ts (generics), types.ts (event map)
+apiClient.ts: Request/Response types
+types.ts: API interfaces
 ```
 
-**Combined Modes**
-```
-Follow EPC quick typescript to add retry logic
+## Agent Selection Logic
+- React/UI → react-virtuoso
+- Algorithm/Node → js-specialist  
+- Commits/Branches → git-wizard
+- Mixed → Primary agent leads, delegates specific parts
 
-apiClient.ts: Exponential backoff, AbortSignal support
-Chose recursion over loop: cleaner async flow
+## Output Format Rules
+- No code blocks in responses
+- File changes as single line summaries
+- Metrics in format: `was→now`
+- Total response under token budget
+- No explanations unless "explain" keyword
+
+## Coordination Between Agents
+When multiple agents needed:
+1. Primary agent does main work
+2. Delegates specific task to secondary
+3. Single summary combining both
+
+Example:
+```
+react-virtuoso: Dashboard.tsx split into 5 components
+js-specialist: Extracted data logic to services/
+git-wizard: Ready to commit: "Refactor dashboard into modules."
 ```
 
-## Output Policy
-- No code in console outputs
-- File changes summarized only
-- Metrics and impact highlighted
-- Concise unless explicitly requested otherwise
+## Anti-Patterns to Avoid
+- ❌ Long explanations of approach
+- ❌ Showing code in responses
+- ❌ Multiple options/alternatives
+- ❌ Justifying decisions
+- ❌ Over-analyzing simple problems
+
+## Success Metrics
+- ✅ Under token budget
+- ✅ Direct solutions
+- ✅ Clear file changes
+- ✅ Measurable impact
+- ✅ Ready to commit
