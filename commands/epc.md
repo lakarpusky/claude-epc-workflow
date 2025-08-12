@@ -68,7 +68,7 @@ Type errors → Quick mode → optional chaining
 ## Usage
 
 ```
-Follow EPC [workflow mode] [language mode] to [task]
+/epc [workflow mode] [language mode] to [task]
 ```
 
 Workflow modes: `standard` (default), `quick`, `architect`, `emergency`
@@ -101,53 +101,6 @@ Fix: Dynamic imports, cherry-pick lodash
 Result: 2.4MB→800KB
 ```
 
-## Examples
-
-**Standard Mode (Default - Concise)**
-```
-Follow EPC to optimize user search timing out with 50k users
-
-Explore: O(n) search, 3s blocking
-Plan: Map lookup, Web Worker
-Code: userSearch.js, 3s→50ms
-```
-
-**Quick Mode (Pattern Match)**
-```
-Follow EPC quick to fix "Cannot read property 'map' of undefined"
-
-Applied: Optional chaining to all array maps
-Files: 3 components updated
-```
-
-**Architect Mode**
-```
-Follow EPC architect to restructure dashboard.js (3000 lines)
-
-Structure:
-→ /widgets
-→ /data  
-→ /hooks
-→ /utils
-Start: data layer
-```
-
-**Emergency Mode**
-```
-Follow EPC emergency to fix payment crash
-
-Reverted: commit a3f2b1
-Deployed: hotfix
-```
-
-**TypeScript Mode**
-```
-Follow EPC typescript to add types to API client
-
-apiClient.ts: Request/Response types
-types.ts: API interfaces
-```
-
 ## Agent Selection Logic
 - React/UI → react-virtuoso
 - Algorithm/Node → js-specialist  
@@ -156,10 +109,37 @@ types.ts: API interfaces
 
 ## Output Format Rules
 - No code blocks in responses
+- One line per concept (use newlines)
+- Consistent prefixes: CREATED:, EXTRACTED:, FILES:, IMPACT:, etc.
+- Metrics over descriptions (350 lines vs "smaller")
+- Arrow notation for transformations (→)
+- No run-on sentences
+- Max 3-4 lines for simple tasks, 4-6 for complex
 - File changes as single line summaries
-- Metrics in format: `was→now`
 - Total response under token budget
-- No explanations unless "explain" keyword
+- No explanations unless "explain" keyword used
+
+## Format Templates
+
+**Quick Mode:**
+```
+Applied: [fix]
+Result: [metric]
+```
+
+**Standard Mode:**
+```
+Explore: [finding]
+Plan: [approach]
+Code: [changes], [metric]
+```
+
+**Complex Operations:**
+```
+[ACTION]: [what] → [where/result]
+FILES: [created/modified]
+IMPACT: [metric/benefit]
+```
 
 ## Coordination Between Agents
 When multiple agents needed:
@@ -169,7 +149,7 @@ When multiple agents needed:
 
 Example:
 ```
-react-virtuoso: Dashboard.tsx split into 5 components
+react-virtuoso: Dashboard.jsx split into 5 components
 js-specialist: Extracted data logic to services/
 git-wizard: Ready to commit: "Refactor dashboard into modules."
 ```
