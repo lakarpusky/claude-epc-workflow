@@ -2,6 +2,13 @@
 
 FAANG-caliber engineering workflow for Claude Code with aggressive token efficiency. Execute complex tasks via specialized agents while avoiding rate limits.
 
+> **"FAANG-caliber" = Production Reality**  
+> Not about working at big tech, but thinking like you deploy to millions. It means:
+> - Every decision has trade-offs
+> - Performance matters at scale  
+> - Simple solutions beat clever ones
+> - Ship working code, not perfect code
+
 ## Why EPC?
 
 Traditional AI coding assistants overthink, over-explain, and hit rate limits fast. EPC solves this with:
