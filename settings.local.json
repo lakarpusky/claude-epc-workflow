@@ -1,26 +1,158 @@
 {
   "permissions": {
     "allow": [
+      // File Operations
       "Bash(mv:*)",
+      "Bash(cp:*)",
+      "Bash(mkdir:*)",
       "Bash(rmdir:*)",
-      "Bash(true)",
-      "Bash(npm run build:*)",
+      "Bash(touch:*)",
+      "Bash(chmod:*)",
+      
+      // Inspection & Navigation
       "Bash(ls:*)",
-      "Bash(test:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
       "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(tree:*)",
+      "Bash(pwd)",
+      "Bash(which:*)",
+      
+      // Git Operations
       "Bash(git add:*)",
-      "Bash(git rebase:*)",
-      "Bash(git merge-base:*)",
-      "Bash(git merge:*)",
       "Bash(git commit:*)",
-      "Read(~/.zshrc)"
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git stash:*)",
+      "Bash(git rebase:*)",
+      "Bash(git merge:*)",
+      "Bash(git merge-base:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git reset:*)",
+      "Bash(git reflog)",
+      "Bash(git show:*)",
+      "Bash(git tag:*)",
+      
+      // NPM/Package Management
+      "Bash(npm run build:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run format:*)",
+      "Bash(npm run precommit:*)",
+      "Bash(npm list)",
+      "Bash(npm audit)",
+      "Bash(npm ci)",
+      "Bash(npm install --save-dev:*)",
+      
+      // Testing & Quality
+      "Bash(test:*)",
+      "Bash(jest:*)",
+      "Bash(vitest:*)",
+      "Bash(eslint:*)",
+      "Bash(prettier:*)",
+      
+      // Performance & Analysis
+      "Bash(du:*)",
+      "Bash(df)",
+      "Bash(ps:*)",
+      "Bash(lsof:*)",
+      
+      // Config Access
+      "Read(~/.zshrc)",
+      "Read(~/.bashrc)",
+      "Read(.env.example)",
+      "Read(package.json)",
+      "Read(tsconfig.json)",
+      "Read(jsconfig.json)",
+      
+      // CLI Tools for EPC
+      "Bash(fd:*)",
+      "Bash(rg:*)",
+      "Bash(ast-grep:*)",
+      "Bash(fzf:*)",
+      "Bash(jq:*)",
+      "Bash(yq:*)",
+      
+      // Build Tools
+      "Bash(vite:*)",
+      "Bash(webpack:*)",
+      "Bash(tsc:*)",
+      "Bash(true)"
     ],
     "deny": [
+      // Network Operations
       "Bash(curl:*)",
-      "Bash(npm run dev:*)",
-      "Bash(op: *)",
+      "Bash(wget:*)",
+      "Bash(ssh:*)",
+      "Bash(scp:*)",
+      "Bash(nc:*)",
+      
+      // Destructive Operations
+      "Bash(rm -rf:*)",
+      "Bash(rm -r:*)",
+      "Bash(sudo:*)",
+      "Bash(chmod 777:*)",
+      
+      // Remote Git
       "Bash(git push:*)",
-      "Bash(rm -rf: *)"
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git clone:*)",
+      
+      // Dev Servers
+      "Bash(npm run dev:*)",
+      "Bash(npm start:*)",
+      "Bash(npm run serve:*)",
+      "Bash(yarn dev:*)",
+      "Bash(pnpm dev:*)",
+      
+      // Package Installation
+      "Bash(npm install:*)",
+      "Bash(yarn add:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pip install:*)",
+      
+      // Sensitive Tools
+      "Bash(op:*)",
+      "Bash(pass:*)",
+      "Bash(gpg:*)",
+      
+      // System Modifications
+      "Bash(kill:*)",
+      "Bash(killall:*)",
+      "Bash(reboot)",
+      "Bash(shutdown:*)",
+      
+      // Database Operations
+      "Bash(psql:*)",
+      "Bash(mysql:*)",
+      "Bash(redis-cli:*)",
+      "Bash(mongo:*)",
+      
+      // Environment Modifications
+      "Write(.env)",
+      "Write(~/.ssh/*)",
+      "Write(/etc/*)"
     ]
+  },
+  "workflow": {
+    "auto_commit": false,
+    "pre_commit_hooks": true,
+    "branch_protection": ["main", "master", "production"],
+    "require_confirmation": ["force", "reset --hard", "rebase -i"],
+    "default_branch_prefix": "feat/",
+    "commit_style": "conventional"
+  },
+  "performance": {
+    "max_file_size": "1MB",
+    "warn_complexity": 10,
+    "warn_function_length": 50,
+    "warn_bundle_size": "250KB"
   }
 }
