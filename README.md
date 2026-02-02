@@ -1,94 +1,118 @@
-# EPC: My Production Workflow
+# Claude EPC Workflow
 
-This is how I code. Fast, efficient, production-ready. No fluff.
+Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, testing, and Git—coordinated by a central orchestrator.
 
-> **My philosophy: Ship code that works.**  
-> - Every decision ships to production
-> - Performance beats perfection
-> - Working code now > elegant code later
-> - Measure everything, guess nothing
+## What This Is
 
-## Why I Built This
+Six markdown files you drop into `.claude/` that give Claude Code domain expertise:
 
-Standard AI assistants waste my time with essays. I need:
-- Instant fixes for real problems
-- Responses under 300 tokens
-- Code that goes straight to production
-- Zero explanations unless I ask
+| Agent | Does |
+|-------|------|
+| `epc` | Routes tasks to the right specialist, manages handoffs |
+| `javascript-specialist` | Algorithms, performance, memory, async patterns |
+| `react-virtuoso` | Components, renders, state, accessibility |
+| `test-sentinel` | Jest, RTL, integration tests, coverage |
+| `git-wizard` | Commits, conflicts, rebases, branches |
+| `pwa-architect` | Converts existing apps to PWAs (standalone) |
 
-## Commands
+## Install
 
 ```bash
-/epc optimize search          # Standard: analyze → plan → fix
-/epc quick fix memory leak    # Quick: instant pattern match
-/epc emergency payment crash  # Emergency: fix now, think later
-/epc typescript add types     # TypeScript mode
-/epc analyze slow checkout    # Deep dive (when needed)
+# Clone to your Claude config
+git clone https://github.com/lakarpusky/claude-epc-workflow.git ~/.claude/agents
+
+# Or copy individual agents
+cp agents/*.md ~/.claude/
 ```
 
-## My Agents
+## Usage
 
-**🟡 javascript-specialist** - Algorithms & performance. O(n²)→O(n). Done.
+```bash
+# In Claude Code
+/epc [mode] [task]
 
-**🔵 react-virtuoso** - React UI. <16ms renders. Accessible. Fast.
+# Modes
+/epc quick fix the null check in UserCard        # 100 tokens, instant
+/epc standard add filter to product list         # 300 tokens, explore→plan→code
+/epc architect redesign state management         # 600 tokens, full analysis
+/epc unbounded evaluate Redux vs Zustand         # No limit, deep dive
+/epc emergency revert last commit                # 50 tokens, fast
 
-**⚪ git-wizard** - Git operations. Clean history. No merge hell.
+# Or call specialists directly
+/javascript-specialist optimize this O(n²) loop
+/react-virtuoso fix re-renders in Dashboard
+/test-sentinel write tests for checkout flow
+/git-wizard squash last 5 commits
+```
 
-## Instant Fixes
+## How It Works
 
-| Problem | Solution | Confidence |
-|---------|---------|------------|
-| Slow list | React.memo | 10/10 |
-| undefined error | Optional chaining | 10/10 |
-| Memory leak | WeakMap | 9/10 |
-| Prop drilling | Context | 9/10 |
-| Stack overflow | Remove recursion | 10/10 |
+```
+You → EPC (orchestrator) → Specialist → Code
+                ↓
+         Routes by context:
+         - .jsx files → react-virtuoso
+         - .js utils → javascript-specialist  
+         - .test.js → test-sentinel
+         - git operations → git-wizard
+         - "slow" + profiler data → appropriate specialist
+```
 
-## Non-Negotiable Rules
+**Multi-agent tasks** pass context between specialists:
+```
+react-virtuoso optimizes component
+       ↓ passes context
+test-sentinel writes tests for the optimization
+       ↓ passes context  
+git-wizard commits with proper message
+```
 
-1. **Code goes to files** - Never in chat
-2. **Metrics only** - 500ms→50ms, not "faster"
-3. **One solution** - The right one
-4. **Ship confidence** - Every fix has a score
-5. **Production first** - Works > perfect
+## Key Features
 
-## My Standards
+**Performance triage** — "Slow" is ambiguous. EPC asks:
+- React Profiler data → react-virtuoso
+- Chrome DevTools data → javascript-specialist
+- No data → asks which type before routing
 
-**Performance:**
-- Renders <16ms or it's broken
-- Bundle <250KB or it's bloated
-- O(n²) is unacceptable
-- Memory leaks = emergency
+**Confidence scoring** — Every decision gets 1-10 rating:
+- 8-10: Proceeds automatically
+- 5-7: Proceeds with stated assumptions
+- <5: Stops and asks for clarification
 
-**Quality:**
-- Functions <50 lines
-- Complexity <10
-- Accessibility required
-- Tests when critical
+**Unbounded mode** — For complex architecture decisions when 600 tokens isn't enough. Triggered by "deep dive", "comprehensive", or explicit `/epc unbounded`.
 
-## What I Don't Do
+**Shared context** — Specialists pass findings to each other. React optimization context flows to test-sentinel so tests verify the actual changes made.
 
-❌ Explain obvious things  
-❌ Show multiple options  
-❌ Justify simple fixes  
-❌ Write documentation first  
-❌ Optimize prematurely  
-❌ Debate patterns  
+## File Structure
 
-## Results
+```
+~/.claude/
+├── epc.md                    # Orchestrator
+├── javascript-specialist.md  # JS/algorithms
+├── react-virtuoso.md         # React/components
+├── test-sentinel.md          # Testing
+├── git-wizard.md             # Git
+└── pwa-architect.md          # PWA conversion (standalone)
+```
 
-My workflow ships code that:
-- Handles millions of users
-- Renders in milliseconds
-- Recovers from errors
-- Scales without rewrites
+## What This Is NOT
 
-This isn't about following trends. It's about shipping code that works, performs, and scales. Today.
+- Not a build system
+- Not a CLI tool with installers
+- Not a dashboard or GUI
+- Not magic—agents need context to work well
+
+## Scope
+
+**Covered:** Frontend JS/TS, React, Jest/RTL, Git workflows, PWA conversion
+
+**Not covered:** Backend (Node/Express beyond JS basics), Vue/Svelte/Angular, E2E (Playwright/Cypress depth), infrastructure/DevOps
+
+## Requirements
+
+- Claude Code
+- Frontend project (JS/TS, React preferred)
 
 ## License
 
-MIT - Take it, adapt it, ship it.
-
----
-
-*Built by someone who measures performance in milliseconds and ships code that scales.*
+MIT
