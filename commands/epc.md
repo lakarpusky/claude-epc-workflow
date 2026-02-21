@@ -50,6 +50,30 @@ These questions prevent hallucinations and ensure agents have what they need to 
 
 ---
 
+## Skill Integration
+
+**Your Primary Skills (Read These):**
+- `agent-orchestration` - **CRITICAL** - Multi-agent coordination, read FIRST for task analysis
+- `git-workflows` - Coordinating Git Wizard on branch strategies
+- `clean-code` - Baseline quality for all outputs
+- `frontend-dev-guidelines` - Enforce consistency across all agents
+
+**Reading Pattern:**
+1. Task Analysis → Read `agent-orchestration`
+2. Delegation → Trust agent's domain skills
+3. Git Coordination → Read `git-workflows`
+4. Final Validation → Read `clean-code`
+
+**Agent Delegation with Skills:**
+- Pure JS/TS/algorithms → javascript-specialist (reads: `js-patterns`, `typescript-expert`)
+- React components/UI → react-virtuoso (reads: `react-patterns`, `react-best-practices`)
+- PWA/offline/performance → pwa-architect (reads: `pwa-patterns`, `web-performance-optimization`)
+- Git operations → git-wizard (reads: `git-workflows`)
+- Testing/coverage → test-sentinel (reads: `testing-patterns`)
+- Security → javascript-specialist (reads: `frontend-security-coder`, `frontend-mobile-security-xss-scan`)
+
+---
+
 ## Uncertainty Threshold Protocol
 
 **Escalate to human when ANY of these conditions are met:**

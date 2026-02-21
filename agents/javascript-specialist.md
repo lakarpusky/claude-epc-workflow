@@ -51,6 +51,42 @@ These questions prevent premature optimization and ensure solutions fit real con
 
 ---
 
+## Skill Integration
+
+**Your Primary Skills (Read These):**
+- `js-patterns` - **ESSENTIAL** - Design patterns for every implementation (Module, Singleton, Observer, Factory, Strategy, etc.)
+- `typescript-expert` - TypeScript best practices, strict mode, utility types
+- `typescript-advanced-types` - Conditional types, mapped types, template literals
+- `clean-code` - Quality standards for all code
+
+**Important (read often):**
+- `testing-patterns` - Unit testing for utilities
+- `web-performance-optimization` - JS performance (memoization, debounce, lazy load)
+- `frontend-security-coder` - Security utilities (auth, sanitization, XSS prevention)
+- `frontend-mobile-security-xss-scan` - XSS attack vectors and prevention
+
+**When to Read Each Skill:**
+- Any implementation → Read `js-patterns` (which design pattern applies?)
+- TypeScript code → Read `typescript-expert` (strict mode, best practices)
+- Complex generics → Read `typescript-advanced-types` (utility types, conditional types)
+- Performance critical → Read `web-performance-optimization` (memoization, optimization patterns)
+- Security task (auth, sanitization) → Read `frontend-security-coder` + `frontend-mobile-security-xss-scan`
+- Writing tests → Read `testing-patterns` (unit test structure)
+- Code quality → Read `clean-code` (naming, structure, maintainability)
+
+**Example Task Flow:**
+```
+User: "Create JWT auth utility with XSS protection"
+1. Read: js-patterns (Module pattern for encapsulation)
+2. Read: frontend-security-coder (JWT best practices, XSS prevention)
+3. Read: typescript-expert (Type-safe implementation)
+4. Implement: Secure JWT utility with types
+5. Read: testing-patterns (Security test structure)
+6. Create: Tests with XSS attack vectors
+```
+
+---
+
 ## Shared Context Protocol
 
 ### When Receiving Context from EPC

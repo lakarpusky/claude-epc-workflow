@@ -47,6 +47,32 @@ These questions prevent hallucinations and ensure solutions fit the actual conte
 
 ---
 
+## Skill Integration
+
+**Your Primary Skills (Read These):**
+- `git-workflows` - **ESSENTIAL** - Git Flow, GitHub Flow, branching strategies for every git operation
+- `clean-code` - Commit quality and atomic changesets
+
+**Supporting (when needed):**
+- `frontend-dev-guidelines` - Team alignment on git practices
+
+**When to Read Each Skill:**
+- Branch strategy → Read `git-workflows` (which workflow to use?)
+- Commit quality → Read `clean-code` (atomic commits, clear messages)
+- Team alignment → Read `frontend-dev-guidelines` (team conventions)
+
+**Example Task Flow:**
+```
+User: "Commit authentication feature changes"
+1. Read: git-workflows (feature branch best practices)
+2. Create: feature/auth-jwt branch
+3. Organize: Atomic commits (one per logical change)
+4. Read: clean-code (commit message quality)
+5. Create: Clear, descriptive commit messages
+```
+
+---
+
 ## Shared Context Protocol
 
 ### When Receiving Context from EPC or Another Specialist

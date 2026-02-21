@@ -53,6 +53,37 @@ These questions prevent testing implementation details and ensure tests catch re
 
 ---
 
+## Skill Integration
+
+**Your Primary Skills (Read These):**
+- `testing-patterns` - **ESSENTIAL** - Unit, integration, e2e, TDD patterns for all testing tasks
+- `clean-code` - Test quality, readability, maintainability
+
+**Supporting (when needed):**
+- `typescript-expert` - Type-safe tests, test utilities
+- `frontend-security-coder` - Security test cases (XSS, auth flows)
+- `frontend-mobile-security-xss-scan` - XSS attack vector testing
+
+**When to Read Each Skill:**
+- Writing any test → Read `testing-patterns` (AAA pattern, integration vs unit)
+- Component tests → Read `testing-patterns` (React Testing Library best practices)
+- Security tests → Read `testing-patterns` + `frontend-security-coder` + `frontend-mobile-security-xss-scan`
+- Type-safe tests → Read `typescript-expert` (test utilities, type assertions)
+- Test quality → Read `clean-code` (descriptive names, maintainability)
+
+**Example Task Flow:**
+```
+User: "Add security tests for comment form"
+1. Read: testing-patterns (Test structure, AAA pattern, MSW setup)
+2. Read: frontend-security-coder (XSS attack vectors, auth patterns)
+3. Read: frontend-mobile-security-xss-scan (Mobile-specific XSS)
+4. Implement: Tests with XSS payloads (<script>, onload, etc.)
+5. Read: clean-code (Test readability, descriptive names)
+6. Validate: Tests pass, coverage good
+```
+
+---
+
 ## Shared Context Protocol
 
 ### When Receiving Context from EPC or Another Specialist

@@ -54,6 +54,47 @@ These questions prevent over-engineering and ensure solutions fit the actual arc
 
 ---
 
+## Skill Integration
+
+**Your Primary Skills (Read These):**
+- `react-patterns` - **ESSENTIAL** - Hooks, compound components, render props, HOCs for every React implementation
+- `react-best-practices` - Performance, reconciliation, memoization, code splitting
+- `react-ui-patterns` - UI composition, layout patterns, responsive design
+- `react-modernization` - Class to functional, Context API, Suspense, Concurrent features
+- `typescript-pro` - TypeScript with React (component props, generics, inference)
+- `frontend-design` - UI/UX implementation, design systems
+- `web-performance-optimization` - React-specific perf (memo, lazy, virtualization)
+
+**Important (read often):**
+- `testing-patterns` - React Testing Library, component testing
+- `clean-code` - Component quality standards
+
+**Supporting (when needed):**
+- `frontend-security-coder` - Auth UI, secure forms
+
+**When to Read Each Skill:**
+- Building components → Read `react-patterns` + `react-ui-patterns`
+- Performance issues → Read `react-best-practices` + `web-performance-optimization`
+- Refactoring legacy → Read `react-modernization` (class to hooks, Context patterns)
+- TypeScript setup → Read `typescript-pro` (component props, generic components)
+- Design implementation → Read `frontend-design` (design system patterns, spacing)
+- Security forms → Read `frontend-security-coder` (input sanitization, auth flows)
+- Writing tests → Read `testing-patterns` (React Testing Library best practices)
+
+**Example Task Flow:**
+```
+User: "Build data table with sorting and filtering"
+1. Read: react-patterns (Compound component pattern for table structure)
+2. Read: react-ui-patterns (Table layout, responsive design)
+3. Read: react-best-practices (Virtualization for large datasets)
+4. Read: typescript-pro (Generic props for type-safe data)
+5. Implement: Compound table component with virtualization
+6. Read: testing-patterns (Component test strategy)
+7. Create: Tests with React Testing Library
+```
+
+---
+
 ## Shared Context Protocol
 
 ### When Receiving Context from EPC or Another Specialist
