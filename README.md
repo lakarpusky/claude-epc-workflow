@@ -1,28 +1,70 @@
 # Claude EPC Workflow
 
-Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, testing, and Git—coordinated by a central orchestrator.
+Multi-agent system for frontend development. Agents read skills (knowledge modules) before implementing.
 
 ## What This Is
 
-Six markdown files you drop into `.claude/` that give Claude Code domain expertise:
+Six agents + 19 skills for frontend development.
 
-| Agent | Does |
-|-------|------|
-| `epc` | Routes tasks to the right specialist, manages handoffs |
-| `javascript-specialist` | Algorithms, performance, memory, async patterns |
-| `react-virtuoso` | Components, renders, state, accessibility |
-| `test-sentinel` | Jest, RTL, integration tests, coverage |
-| `git-wizard` | Commits, conflicts, rebases, branches |
-| `pwa-architect` | Converts existing apps to PWAs (standalone) |
+**Agents:**
+- `epc` - Routes tasks to specialists
+- `javascript-specialist` - JS/TS, algorithms, security utilities
+- `react-virtuoso` - React components, UI, performance
+- `pwa-architect` - PWA conversion, offline-first
+- `git-wizard` - Git operations, commits
+- `test-sentinel` - Testing including security tests
+
+## Skills
+
+This workflow uses **19 skills** - knowledge modules that agents read before implementing.
+
+**Created for this workflow (6):**
+- `agent-orchestration` - Multi-agent coordination patterns
+- `git-workflows` - Git Flow, GitHub Flow, branching strategies
+- `js-patterns` - JavaScript design patterns (Module, Singleton, Observer, Factory, etc.)
+- `pwa-patterns` - Service workers, caching strategies, offline-first
+- `react-patterns` - Hooks, compound components, render props, HOCs
+- `testing-patterns` - Unit, integration, e2e testing patterns
+
+**From community ([antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills)) (13):**
+- `clean-code`, `frontend-design`, `frontend-dev-guidelines`, `frontend-developer`
+- `frontend-mobile-security-xss-scan`, `frontend-security-coder`
+- `react-best-practices`, `react-modernization`, `react-ui-patterns`
+- `typescript-advanced-types`, `typescript-expert`, `typescript-pro`
+- `web-performance-optimization`
+
+Skills are located in `~/.claude/skills/` and cover patterns, quality standards, security, performance, and TypeScript.
 
 ## Install
 
 ```bash
-# Clone to your Claude config
-git clone https://github.com/lakarpusky/claude-epc-workflow.git ~/.claude/agents
+# Clone repo
+git clone https://github.com/lakarpusky/claude-epc-workflow.git
 
-# Or copy individual agents
-cp agents/*.md ~/.claude/
+# Copy to your .claude directory
+cp -r claude-epc-workflow/agents ~/.claude/
+cp -r claude-epc-workflow/commands ~/.claude/
+cp -r claude-epc-workflow/skills ~/.claude/
+```
+
+## How Skills Work
+
+**Without skills:**
+```
+You: "Add XSS protection"
+→ Agent implements based on training data
+→ Inconsistent patterns
+```
+
+**With skills:**
+```
+You: "Add XSS protection"
+→ EPC reads agent-orchestration skill
+→ Delegates to javascript-specialist
+→ JS specialist reads frontend-security-coder skill
+→ Implements DOMPurify (skill-informed)
+→ test-sentinel reads same security skills
+→ Creates XSS tests with proper vectors
 ```
 
 ## Usage
@@ -31,87 +73,150 @@ cp agents/*.md ~/.claude/
 # In Claude Code
 /epc [mode] [task]
 
-# Modes
-/epc quick fix the null check in UserCard        # 100 tokens, instant
-/epc standard add filter to product list         # 300 tokens, explore→plan→code
-/epc architect redesign state management         # 600 tokens, full analysis
-/epc unbounded evaluate Redux vs Zustand         # No limit, deep dive
-/epc emergency revert last commit                # 50 tokens, fast
+# Examples
+/epc quick fix null check              # Fast, ~100 tokens
+/epc standard add JWT auth             # Standard, ~300 tokens
+/epc architect redesign state          # Complex, ~600 tokens
 
-# Or call specialists directly
-/javascript-specialist optimize this O(n²) loop
-/react-virtuoso fix re-renders in Dashboard
-/test-sentinel write tests for checkout flow
-/git-wizard squash last 5 commits
+# Direct agent calls
+/javascript-specialist create login utility
+/react-virtuoso build data table
+/pwa-architect convert to PWA
+/test-sentinel add security tests
 ```
 
-## How It Works
+## Token Management
+
+**Default budgets per mode:**
+- **Quick:** ~100 tokens - Instant patterns, known fixes
+- **Standard:** ~300 tokens - Feature implementation (Explore → Plan → Code)
+- **Architect:** ~600 tokens - Complex architecture, multi-agent coordination
+- **Emergency:** ~50 tokens - Production fixes, fastest path
+
+**Why this matters:**
+- Keeps responses concise and actionable
+- Prevents over-explanation and rambling
+- Each agent optimized for minimal token usage
+- Typical task: 150-400 tokens vs 1000+ in generic workflows
+
+**Token strategy:**
+- No code in responses (only file changes)
+- Metrics over descriptions
+- Confidence scores instead of justifications
+- One solution, not multiple options
+
+## Multi-Agent Example
+
+**Request:** "Add offline cart"
 
 ```
-You → EPC (orchestrator) → Specialist → Code
-                ↓
-         Routes by context:
-         - .jsx files → react-virtuoso
-         - .js utils → javascript-specialist  
-         - .test.js → test-sentinel
-         - git operations → git-wizard
-         - "slow" + profiler data → appropriate specialist
+EPC (reads: agent-orchestration)
+  ├─→ React Virtuoso (reads: react-patterns, react-ui-patterns)
+  │   Creates: Cart UI, product list
+  │
+  ├─→ PWA Architect (reads: pwa-patterns, web-performance-optimization)
+  │   Creates: IndexedDB storage, offline sync, service worker
+  │
+  ├─→ JavaScript Specialist (reads: js-patterns, typescript-expert)
+  │   Creates: Cart manager, calculator
+  │
+  ├─→ Test Sentinel (reads: testing-patterns)
+  │   Creates: Unit tests, integration tests
+  │
+  └─→ Git Wizard (reads: git-workflows)
+      Creates: Feature branch, atomic commits
 ```
-
-**Multi-agent tasks** pass context between specialists:
-```
-react-virtuoso optimizes component
-       ↓ passes context
-test-sentinel writes tests for the optimization
-       ↓ passes context  
-git-wizard commits with proper message
-```
-
-## Key Features
-
-**Performance triage** — "Slow" is ambiguous. EPC asks:
-- React Profiler data → react-virtuoso
-- Chrome DevTools data → javascript-specialist
-- No data → asks which type before routing
-
-**Confidence scoring** — Every decision gets 1-10 rating:
-- 8-10: Proceeds automatically
-- 5-7: Proceeds with stated assumptions
-- <5: Stops and asks for clarification
-
-**Unbounded mode** — For complex architecture decisions when 600 tokens isn't enough. Triggered by "deep dive", "comprehensive", or explicit `/epc unbounded`.
-
-**Shared context** — Specialists pass findings to each other. React optimization context flows to test-sentinel so tests verify the actual changes made.
 
 ## File Structure
 
 ```
 ~/.claude/
-├── epc.md                    # Orchestrator
-├── javascript-specialist.md  # JS/algorithms
-├── react-virtuoso.md         # React/components
-├── test-sentinel.md          # Testing
-├── git-wizard.md             # Git
-└── pwa-architect.md          # PWA conversion (standalone)
+├── agents/                      # Specialized agents
+│   ├── git-wizard.md
+│   ├── javascript-specialist.md
+│   ├── pwa-architect.md
+│   ├── react-virtuoso.md
+│   └── test-sentinel.md
+│
+├── commands/                    # Slash commands
+│   ├── analyze-codebase.md
+│   └── epc.md                   # Main orchestrator
+│
+└── skills/                      # Knowledge modules (19 total)
+    ├── agent-orchestration/
+    ├── clean-code/
+    ├── frontend-design/
+    ├── frontend-dev-guidelines/
+    ├── frontend-developer/
+    ├── frontend-mobile-security-xss-scan/
+    ├── frontend-security-coder/
+    ├── git-workflows/
+    ├── js-patterns/
+    ├── pwa-patterns/
+    ├── react-best-practices/
+    ├── react-modernization/
+    ├── react-patterns/
+    ├── react-ui-patterns/
+    ├── testing-patterns/
+    ├── typescript-advanced-types/
+    ├── typescript-expert/
+    ├── typescript-pro/
+    └── web-performance-optimization/
 ```
+
+## Skill Assignment Matrix
+
+| Skill | EPC | JS | React | PWA | Git | Test |
+|-------|-----|----|----|-----|-----|------|
+| agent-orchestration | ✓✓✓ | | | | | |
+| clean-code | ✓ | ✓✓✓ | ✓✓ | ✓ | ✓✓ | ✓✓ |
+| js-patterns | | ✓✓✓ | ✓ | | | |
+| react-patterns | | | ✓✓✓ | | | |
+| pwa-patterns | | | | ✓✓✓ | | |
+| frontend-security-coder | | ✓✓ | ✓ | | | ✓✓ |
+| testing-patterns | | ✓✓ | ✓✓ | ✓✓ | | ✓✓✓ |
+| typescript-expert | | ✓✓✓ | ✓ | | | ✓✓ |
+| typescript-pro | | ✓ | ✓✓✓ | | | ✓ |
+| web-performance-optimization | | ✓✓ | ✓✓✓ | ✓✓✓ | | |
+| git-workflows | | | | | ✓✓✓ | |
+| react-best-practices | | | ✓✓✓ | | | |
+| react-ui-patterns | | | ✓✓✓ | ✓ | | |
+| frontend-design | | | ✓✓✓ | ✓✓ | | |
+
+**Legend:** ✓✓✓ = Primary (always) · ✓✓ = Important (often) · ✓ = Supporting (sometimes)
+
+## Key Features
+
+**Consistent Patterns**  
+Agents read skills before implementing. Same patterns every time.
+
+**Security Built-In**  
+JS Specialist builds secure utilities via `frontend-security-coder`. Test Sentinel creates security tests using same knowledge.
+
+**Performance Default**  
+React Virtuoso reads `react-best-practices`. PWA Architect reads `web-performance-optimization`. JS Specialist optimizes algorithms via `js-patterns`.
+
+**Quality Gates**  
+All agents read `clean-code` for baseline quality standards.
 
 ## What This Is NOT
 
-- Not a build system
-- Not a CLI tool with installers
-- Not a dashboard or GUI
-- Not magic—agents need context to work well
+* Not a framework or build system
+* Not a GUI or dashboard
+* Skills must exist in `~/.claude/skills/`
 
 ## Scope
 
-**Covered:** Frontend JS/TS, React, Jest/RTL, Git workflows, PWA conversion
+**Covered:**  
+Frontend JS/TS, React, Jest/RTL, Git, PWA, security (XSS, auth), performance
 
-**Not covered:** Backend (Node/Express beyond JS basics), Vue/Svelte/Angular, E2E (Playwright/Cypress depth), infrastructure/DevOps
+**Not Covered:**  
+Backend, Vue/Svelte/Angular, E2E testing (Playwright/Cypress), infrastructure
 
 ## Requirements
 
-- Claude Code
-- Frontend project (JS/TS, React preferred)
+* Claude Code
+* Frontend project (JS/TS, React preferred)
 
 ## License
 
