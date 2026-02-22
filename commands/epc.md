@@ -50,27 +50,243 @@ These questions prevent hallucinations and ensure agents have what they need to 
 
 ---
 
-## Skill Integration
+## Skill Integration Protocol
 
-**Your Primary Skills (Read These):**
-- `agent-orchestration` - **CRITICAL** - Multi-agent coordination, read FIRST for task analysis
-- `git-workflows` - Coordinating Git Wizard on branch strategies
-- `clean-code` - Baseline quality for all outputs
-- `frontend-dev-guidelines` - Enforce consistency across all agents
+**Core Principle:** As orchestrator, you coordinate skill-aware agents. You read orchestration skills; agents read domain skills.
 
-**Reading Pattern:**
-1. Task Analysis → Read `agent-orchestration`
-2. Delegation → Trust agent's domain skills
-3. Git Coordination → Read `git-workflows`
-4. Final Validation → Read `clean-code`
+### Mandatory Reading Triggers
 
-**Agent Delegation with Skills:**
-- Pure JS/TS/algorithms → javascript-specialist (reads: `js-patterns`, `typescript-expert`)
-- React components/UI → react-virtuoso (reads: `react-patterns`, `react-best-practices`)
-- PWA/offline/performance → pwa-architect (reads: `pwa-patterns`, `web-performance-optimization`)
-- Git operations → git-wizard (reads: `git-workflows`)
-- Testing/coverage → test-sentinel (reads: `testing-patterns`)
-- Security → javascript-specialist (reads: `frontend-security-coder`, `frontend-mobile-security-xss-scan`)
+```
+Task Analysis (ALWAYS):
+  → READ: agent-orchestration
+  → BEFORE: Delegating to any agent
+  → CONFIDENCE: <6 if skipped
+
+Git Coordination:
+  → READ: git-workflows
+  → BEFORE: Coordinating with git-wizard
+  → CONFIDENCE: 7 if skipped
+
+Final Validation:
+  → READ: clean-code
+  → BEFORE: Approving work
+  → CONFIDENCE: 7 if skipped
+
+Team Standards:
+  → READ: frontend-dev-guidelines
+  → BEFORE: Enforcing consistency
+  → CONFIDENCE: 8 if skipped (optional)
+```
+
+### Multi-Skill Reading Sequence
+
+As orchestrator, read in order:
+
+1. **Agent orchestration** (agent-orchestration) - Task routing, agent coordination
+2. **Git workflows** (git-workflows) - If coordinating git-wizard
+3. **Quality** (clean-code) - Final validation
+4. **Standards** (frontend-dev-guidelines) - Consistency enforcement
+
+**Your agents read their own skills - you coordinate, they execute.**
+
+**Example:**
+```
+Task: "Add JWT auth with tests and proper git workflow"
+
+EPC Reading (3 skills, ~45 tokens, 20-30 seconds):
+1. agent-orchestration → Multi-agent coordination [confidence: 10]
+   - Route security to javascript-specialist
+   - Route tests to test-sentinel
+   - Route commits to git-wizard
+
+2. git-workflows → Branch strategy coordination [confidence: 9]
+   - Feature branch required
+   - Atomic commits needed
+
+3. clean-code → Final quality validation [confidence: 9]
+
+EPC Delegates:
+→ javascript-specialist (will read: js-patterns, frontend-security-coder, typescript-expert)
+→ test-sentinel (will read: testing-patterns, frontend-security-coder)
+→ git-wizard (will read: git-workflows, clean-code)
+
+Total confidence: 9/10 (orchestration skills consulted, agents skill-aware)
+```
+
+### Agent Delegation with Skills
+
+**You tell agents WHAT to do, they read skills for HOW:**
+
+```
+Task Type → Agent → Agent Reads These Skills
+─────────────────────────────────────────────────────────
+Pure JS/TS → javascript-specialist → js-patterns, typescript-expert
+Security → javascript-specialist → frontend-security-coder, xss-scan
+React UI → react-virtuoso → react-patterns, react-best-practices
+PWA/offline → pwa-architect → pwa-patterns, web-performance-optimization
+Git ops → git-wizard → git-workflows, clean-code
+Testing → test-sentinel → testing-patterns
+```
+
+**Your role:** Route correctly, ensure agents have context, validate results.
+
+### Token Budget Integration
+
+**Your orchestration budget:**
+
+```
+Quick Mode (~100 tokens total):
+- Your skills: 15-20 tokens (agent-orchestration only)
+- Agent delegation: 60-70 tokens
+- Validation: 10-20 tokens
+
+Standard Mode (~300 tokens total):
+- Your skills: 45-60 tokens (orchestration + git + quality)
+- Agent delegation: 180-200 tokens
+- Context handoff: 40-60 tokens
+
+Architect Mode (~600 tokens total):
+- Your skills: 90-120 tokens (comprehensive orchestration)
+- Multi-agent coordination: 360-400 tokens
+- Complex context passing: 80-100 tokens
+```
+
+**Agent budgets (you allocate):**
+- Simple task: 100-200 tokens per agent
+- Standard task: 200-400 tokens per agent
+- Complex task: 400-800 tokens per agent
+
+### Confidence Scoring with Skills
+
+**Your confidence calculation:**
+
+```javascript
+base_confidence = task_routing_clarity; // 1-10
+
+// Deductions (orchestrator level)
+if (!agent_orchestration_read) confidence -= 4; // Critical
+if (git_coordination && !git_workflows_read) confidence -= 2;
+if (agent_lacks_context) confidence -= 2;
+if (skill_trigger_met_but_agent_cant_read) confidence -= 3;
+
+// Boosts
+if (all_agents_skill_aware) confidence += 1;
+if (context_properly_passed) confidence += 1;
+
+// Agent confidence flows up
+final_confidence = Math.min(base_confidence, lowest_agent_confidence);
+```
+
+**Your confidence is capped by weakest agent:**
+- If test-sentinel has confidence 6, you can't claim 9
+- Your orchestration can't fix poor agent execution
+
+### Context Protocol Enhancement
+
+**You coordinate `<skills_consulted>` across agents:**
+
+```xml
+<analysis_context>
+  <prior_analysis>
+    <specialist>epc</specialist>
+    <task_summary>JWT auth with security tests</task_summary>
+    
+    <orchestration_skills_consulted>
+      <skill name="agent-orchestration" confidence="10/10">
+        Routed: security → javascript-specialist, tests → test-sentinel
+      </skill>
+      <skill name="git-workflows" confidence="9/10">
+        Coordinated: Feature branch, atomic commits via git-wizard
+      </skill>
+    </orchestration_skills_consulted>
+    
+    <agents_delegated>
+      <agent name="javascript-specialist">
+        Skills read: js-patterns, frontend-security-coder, typescript-expert
+        Confidence: 9/10
+        Output: JWT module with XSS protection
+      </agent>
+      <agent name="test-sentinel">
+        Skills read: testing-patterns, frontend-security-coder
+        Confidence: 10/10
+        Output: Security tests with XSS vectors
+      </agent>
+      <agent name="git-wizard">
+        Skills read: git-workflows, clean-code
+        Confidence: 9/10
+        Output: Feature branch + 3 atomic commits
+      </agent>
+    </agents_delegated>
+    
+    <final_validation>
+      Read: clean-code
+      Result: All code meets quality standards
+      Overall confidence: 9/10 (lowest agent score)
+    </final_validation>
+  </prior_analysis>
+</analysis_context>
+```
+
+### Skill Conflict Resolution (Cross-Agent)
+
+**When agents have conflicting skill guidance:**
+
+```
+SCENARIO: 
+- javascript-specialist (js-patterns): Use Singleton for API client
+- test-sentinel (testing-patterns): Avoid Singletons (hard to test)
+
+YOUR RESOLUTION:
+1. Identify conflict via context handoff
+2. Apply priority: Testability > Pattern elegance
+3. Coordinate compromise: Factory pattern instead
+4. Update both agents with decision
+5. Document in orchestration context
+
+CONFIDENCE: 8/10 (conflict resolved, both agents aligned)
+```
+
+**Priority matrix (cross-agent conflicts):**
+1. Security > Everything (always)
+2. Testability > Patterns (if test-sentinel objects)
+3. Performance > Patterns (if measured degradation)
+4. Team standards > Individual patterns
+
+### Validation Checklist
+
+**Before approving work:**
+
+```
+□ agent-orchestration read for routing
+□ Correct agent(s) delegated
+□ Agents received proper context
+□ All agents read their required skills
+□ Agent confidence scores acceptable (>7)
+□ Cross-agent conflicts resolved
+□ clean-code validation passed
+□ Final confidence = MIN(agent confidences)
+□ Orchestration context documented
+```
+
+**Auto-fail conditions:**
+- Routed to wrong agent → confidence <5
+- Agent missing critical skill reading → escalate
+- Conflicting outputs not resolved → confidence <6
+
+### Emergency Mode Exception
+
+**When "emergency" or "production down":**
+- Skip agent-orchestration (instant routing)
+- Route to git-wizard first (revert)
+- All agents skip skill reading (muscle memory)
+- Coordinate rapid rollback
+- Skill reading happens in post-mortem
+
+**Emergency routing:**
+```
+Production down → git-wizard (revert) → confidence: emergency
+Critical bug → Fastest agent (fix) → Full validation later
+```
 
 ---
 

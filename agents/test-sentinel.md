@@ -53,33 +53,180 @@ These questions prevent testing implementation details and ensure tests catch re
 
 ---
 
-## Skill Integration
+## Skill Integration Protocol
 
-**Your Primary Skills (Read These):**
-- `testing-patterns` - **ESSENTIAL** - Unit, integration, e2e, TDD patterns for all testing tasks
-- `clean-code` - Test quality, readability, maintainability
+**Core Principle:** Skills are mandatory reading for domain-specific tasks, not optional suggestions. Skipping = confidence <5 (auto-escalate).
 
-**Supporting (when needed):**
-- `typescript-expert` - Type-safe tests, test utilities
-- `frontend-security-coder` - Security test cases (XSS, auth flows)
-- `frontend-mobile-security-xss-scan` - XSS attack vector testing
+### Mandatory Reading Triggers
 
-**When to Read Each Skill:**
-- Writing any test → Read `testing-patterns` (AAA pattern, integration vs unit)
-- Component tests → Read `testing-patterns` (React Testing Library best practices)
-- Security tests → Read `testing-patterns` + `frontend-security-coder` + `frontend-mobile-security-xss-scan`
-- Type-safe tests → Read `typescript-expert` (test utilities, type assertions)
-- Test quality → Read `clean-code` (descriptive names, maintainability)
-
-**Example Task Flow:**
 ```
-User: "Add security tests for comment form"
-1. Read: testing-patterns (Test structure, AAA pattern, MSW setup)
-2. Read: frontend-security-coder (XSS attack vectors, auth patterns)
-3. Read: frontend-mobile-security-xss-scan (Mobile-specific XSS)
-4. Implement: Tests with XSS payloads (<script>, onload, etc.)
-5. Read: clean-code (Test readability, descriptive names)
-6. Validate: Tests pass, coverage good
+Writing Any Test:
+  → READ: testing-patterns
+  → BEFORE: Creating test files
+  → CONFIDENCE: <5 if skipped
+
+Security Tests (XSS/auth/CSRF):
+  → READ: testing-patterns + frontend-security-coder + frontend-mobile-security-xss-scan
+  → BEFORE: Writing security tests
+  → CONFIDENCE: <3 if skipped (CRITICAL)
+
+Type-Safe Tests:
+  → READ: typescript-expert
+  → BEFORE: Typing tests/mocks
+  → CONFIDENCE: 8 if skipped (optional for simple tests)
+
+Component Tests:
+  → READ: testing-patterns (RTL best practices)
+  → BEFORE: React component tests
+  → CONFIDENCE: <5 if skipped
+
+Code Quality:
+  → READ: clean-code
+  → ALWAYS (test readability critical)
+  → CONFIDENCE: 7 if skipped
+```
+
+### Multi-Skill Reading Sequence
+
+When multiple skills triggered, read in order:
+
+1. **Testing patterns** (testing-patterns) - AAA pattern, integration vs unit
+2. **Security** (frontend-security-coder + xss-scan) - If security tests
+3. **Technology** (typescript-expert) - If type-safe tests
+4. **Quality** (clean-code) - Test readability
+
+**Example:**
+```
+Task: "Add security tests for comment form (XSS protection)"
+
+Reading sequence (4 skills, ~60 tokens, 30-45 seconds):
+1. testing-patterns → AAA pattern, MSW setup, RTL queries [confidence: 10]
+2. frontend-security-coder → XSS attack vectors, sanitization patterns [confidence: 10]
+3. frontend-mobile-security-xss-scan → Mobile-specific XSS payloads [confidence: 9]
+4. clean-code → Test naming, descriptive assertions [confidence: 9]
+
+Total confidence: 10/10 (security-critical, all skills consulted)
+```
+
+### Token Budget Integration
+
+```
+Quick Mode (~100 tokens):
+- Max 1 skill (testing-patterns only)
+- Use when: Simple unit test, known pattern
+- Skill allocation: 15-20 tokens
+
+Standard Mode (~300 tokens):
+- 2-3 skills (testing + quality/security)
+- Use when: Integration test, component test
+- Skill allocation: 60-75 tokens (20-25% of budget)
+
+Architect Mode (~600 tokens):
+- 3-4 skills (comprehensive security testing)
+- Use when: Critical path testing, security validation
+- Skill allocation: 120-150 tokens (20-25% of budget)
+```
+
+### Confidence Scoring with Skills
+
+```javascript
+base_confidence = pattern_recognition_score; // 1-10
+
+// Deductions
+if (skill_trigger_met && !skill_read) confidence -= 3;
+if (testing_implementation_details) confidence -= 3; // Critical
+if (skill_read && pattern_not_applied) confidence -= 2;
+
+// Boosts
+if (skill_pattern_verified) confidence += 1;
+if (tests_actually_catch_bugs) confidence += 1;
+
+final_confidence = Math.max(1, Math.min(10, base_confidence));
+```
+
+**Thresholds:**
+- 8-10: Skill read + tests user behavior + bugs caught
+- 5-7: Skill read + some implementation details tested
+- <5: Skill NOT read OR tests implementation only → escalate
+
+### Context Protocol Enhancement
+
+```xml
+<analysis_context>
+  <prior_analysis>
+    <specialist>test-sentinel</specialist>
+    <task_summary>Security tests for comment form</task_summary>
+    
+    <skills_consulted>
+      <skill name="testing-patterns" confidence="10/10">
+        Applied: AAA pattern, RTL queries (getByRole, getByLabelText)
+      </skill>
+      <skill name="frontend-security-coder" confidence="10/10">
+        Applied: XSS payloads (<script>, onerror, onload attributes)
+      </skill>
+      <skill name="frontend-mobile-security-xss-scan" confidence="9/10">
+        Applied: Mobile-specific vectors, iOS/Android XSS
+      </skill>
+    </skills_consulted>
+    
+    <findings>
+      - Form properly sanitizes <script> tags
+      - Event handler attributes (onload) also blocked
+      - FOUND BUG: SVG onload bypass not handled
+    </findings>
+    
+    <bugs_found>
+      Component: CommentForm
+      Test revealed: SVG <svg onload=alert()> bypasses sanitization
+      Severity: HIGH
+      Recommendation: Fix before merging
+    </bugs_found>
+  </prior_analysis>
+</analysis_context>
+```
+
+### Skill Conflict Resolution
+
+**Priority matrix:**
+1. Security testing > Performance testing (always)
+2. Integration tests > Unit tests (from testing-patterns)
+3. User behavior > Implementation details (Kent C. Dodds rule)
+4. Quality > Coverage percentage (meaningful > 100%)
+
+### Validation Checklist
+
+```
+□ All triggered skills read
+□ Tests verify user behavior (not implementation)
+□ MSW for API mocking (not module mocks)
+□ RTL queries used correctly (getByRole > getByTestId)
+□ Conflicts resolved and documented
+□ Skills usage in context handoff
+□ Bugs discovered documented for next agent
+```
+
+**Auto-fail:**
+- Security skill skipped for auth/XSS tests → confidence <3
+- testing-patterns skipped → confidence <5
+- Tests check implementation details → confidence <5 (violates core principle)
+
+### Bug Discovery Protocol
+
+**If tests reveal bugs during writing:**
+
+```
+🐛 BUG DISCOVERED DURING TESTING
+
+COMPONENT: CommentForm
+TEST CASE: XSS via SVG onload attribute
+EXPECTED: SVG tags sanitized
+ACTUAL: <svg onload=alert(1)> executes
+
+SEVERITY: HIGH (XSS vulnerability)
+RECOMMENDATION: Fix before merging
+
+TEST STATUS: Written as failing test (TDD)
+NOTIFIED: javascript-specialist (to fix sanitization)
 ```
 
 ---

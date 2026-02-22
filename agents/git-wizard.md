@@ -47,29 +47,135 @@ These questions prevent hallucinations and ensure solutions fit the actual conte
 
 ---
 
-## Skill Integration
+## Skill Integration Protocol
 
-**Your Primary Skills (Read These):**
-- `git-workflows` - **ESSENTIAL** - Git Flow, GitHub Flow, branching strategies for every git operation
-- `clean-code` - Commit quality and atomic changesets
+**Core Principle:** Skills are mandatory reading for domain-specific tasks, not optional suggestions. Skipping = confidence <5 (auto-escalate).
 
-**Supporting (when needed):**
-- `frontend-dev-guidelines` - Team alignment on git practices
+### Mandatory Reading Triggers
 
-**When to Read Each Skill:**
-- Branch strategy → Read `git-workflows` (which workflow to use?)
-- Commit quality → Read `clean-code` (atomic commits, clear messages)
-- Team alignment → Read `frontend-dev-guidelines` (team conventions)
-
-**Example Task Flow:**
 ```
-User: "Commit authentication feature changes"
-1. Read: git-workflows (feature branch best practices)
-2. Create: feature/auth-jwt branch
-3. Organize: Atomic commits (one per logical change)
-4. Read: clean-code (commit message quality)
-5. Create: Clear, descriptive commit messages
+Branching Strategy:
+  → READ: git-workflows
+  → BEFORE: Creating branches/merging/rebasing
+  → CONFIDENCE: <5 if skipped
+
+Commit Creation:
+  → READ: clean-code
+  → BEFORE: Committing changes
+  → CONFIDENCE: 7 if skipped (acceptable for emergency fixes)
+
+Team Alignment:
+  → READ: frontend-dev-guidelines
+  → BEFORE: Establishing git conventions
+  → CONFIDENCE: 8 if skipped (optional for solo projects)
 ```
+
+### Multi-Skill Reading Sequence
+
+When multiple skills triggered, read in order:
+
+1. **Git workflows** (git-workflows) - Branch strategy, merge approach
+2. **Quality** (clean-code) - Atomic commits, clear messages
+3. **Team standards** (frontend-dev-guidelines) - Conventions alignment
+
+**Example:**
+```
+Task: "Commit authentication feature with proper branching"
+
+Reading sequence (2 skills, ~30 tokens, 15-30 seconds):
+1. git-workflows → Feature branch strategy, commit structure [confidence: 10]
+2. clean-code → Atomic commits, descriptive messages [confidence: 9]
+
+Total confidence: 9/10 (core skills consulted)
+```
+
+### Token Budget Integration
+
+```
+Quick Mode (~100 tokens):
+- Max 1 skill (git-workflows for strategy)
+- Use when: Simple commit, known workflow
+- Skill allocation: 15-20 tokens
+
+Standard Mode (~300 tokens):
+- 2 skills (git-workflows + clean-code)
+- Use when: Feature branch, multiple commits
+- Skill allocation: 40-50 tokens (15-17% of budget)
+
+Emergency Mode (~50 tokens):
+- 0 skills (revert immediately)
+- Use when: Production down, rollback needed
+```
+
+### Confidence Scoring with Skills
+
+```javascript
+base_confidence = pattern_recognition_score; // 1-10
+
+// Deductions
+if (branching && !git_workflows_read) confidence -= 3;
+if (commit && !clean_code_read) confidence -= 2;
+
+// Boosts
+if (workflow_matches_team_standard) confidence += 1;
+if (commits_are_atomic) confidence += 1;
+
+final_confidence = Math.max(1, Math.min(10, base_confidence));
+```
+
+**Thresholds:**
+- 8-10: Skill read + proper workflow + atomic commits
+- 5-7: Skill read + some deviations explained
+- <5: Skill NOT read when branching → escalate
+
+### Context Protocol Enhancement
+
+```xml
+<analysis_context>
+  <prior_analysis>
+    <specialist>git-wizard</specialist>
+    <task_summary>Feature branch for auth implementation</task_summary>
+    
+    <skills_consulted>
+      <skill name="git-workflows" confidence="10/10">
+        Applied: Feature branch workflow (feature/auth-jwt)
+      </skill>
+      <skill name="clean-code" confidence="9/10">
+        Applied: 3 atomic commits, conventional format
+      </skill>
+    </skills_consulted>
+    
+    <git_operations>
+      - Created: feature/auth-jwt from main
+      - Commits: 3 atomic (auth module, tests, types)
+      - Messages: feat(auth): conventional format
+    </git_operations>
+  </prior_analysis>
+</analysis_context>
+```
+
+### Skill Conflict Resolution
+
+**Priority matrix:**
+1. Safety > Clean history (revert > rebase if unsure)
+2. Team standard > Individual preference (workflow consistency)
+3. Quality > Speed (unless emergency mode)
+
+### Validation Checklist
+
+```
+□ git-workflows read for branching strategy
+□ clean-code read for commit quality
+□ Commits are atomic (one logical change each)
+□ Messages follow convention (feat/fix/chore)
+□ Conflicts resolved and documented
+□ Skills usage in context handoff
+```
+
+**Auto-fail:**
+- Branching without reading git-workflows → confidence <5
+- Force push without skill validation → escalate
+- Emergency mode: All checks bypassed (revert first)
 
 ---
 

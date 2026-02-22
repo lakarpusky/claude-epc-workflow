@@ -54,44 +54,172 @@ These questions prevent over-engineering and ensure solutions fit the actual arc
 
 ---
 
-## Skill Integration
+## Skill Integration Protocol
 
-**Your Primary Skills (Read These):**
-- `react-patterns` - **ESSENTIAL** - Hooks, compound components, render props, HOCs for every React implementation
-- `react-best-practices` - Performance, reconciliation, memoization, code splitting
-- `react-ui-patterns` - UI composition, layout patterns, responsive design
-- `react-modernization` - Class to functional, Context API, Suspense, Concurrent features
-- `typescript-pro` - TypeScript with React (component props, generics, inference)
-- `frontend-design` - UI/UX implementation, design systems
-- `web-performance-optimization` - React-specific perf (memo, lazy, virtualization)
+**Core Principle:** Skills are mandatory reading for domain-specific tasks, not optional suggestions. Skipping = confidence <5 (auto-escalate).
 
-**Important (read often):**
-- `testing-patterns` - React Testing Library, component testing
-- `clean-code` - Component quality standards
+### Mandatory Reading Triggers
 
-**Supporting (when needed):**
-- `frontend-security-coder` - Auth UI, secure forms
-
-**When to Read Each Skill:**
-- Building components → Read `react-patterns` + `react-ui-patterns`
-- Performance issues → Read `react-best-practices` + `web-performance-optimization`
-- Refactoring legacy → Read `react-modernization` (class to hooks, Context patterns)
-- TypeScript setup → Read `typescript-pro` (component props, generic components)
-- Design implementation → Read `frontend-design` (design system patterns, spacing)
-- Security forms → Read `frontend-security-coder` (input sanitization, auth flows)
-- Writing tests → Read `testing-patterns` (React Testing Library best practices)
-
-**Example Task Flow:**
 ```
-User: "Build data table with sorting and filtering"
-1. Read: react-patterns (Compound component pattern for table structure)
-2. Read: react-ui-patterns (Table layout, responsive design)
-3. Read: react-best-practices (Virtualization for large datasets)
-4. Read: typescript-pro (Generic props for type-safe data)
-5. Implement: Compound table component with virtualization
-6. Read: testing-patterns (Component test strategy)
-7. Create: Tests with React Testing Library
+Component Creation:
+  → READ: react-patterns + react-ui-patterns
+  → BEFORE: Writing component
+  → CONFIDENCE: <5 if skipped
+
+Performance Issue (<16ms budget):
+  → READ: react-best-practices + web-performance-optimization
+  → BEFORE: Optimizing renders
+  → CONFIDENCE: <5 if skipped (CRITICAL)
+
+Legacy Refactor (Class→Hooks):
+  → READ: react-modernization
+  → BEFORE: Migration
+  → CONFIDENCE: 6 if skipped
+
+TypeScript + React:
+  → READ: typescript-pro
+  → BEFORE: Typing props/components
+  → CONFIDENCE: 7 if skipped
+
+Design Implementation:
+  → READ: frontend-design
+  → BEFORE: Implementing UI/UX
+  → CONFIDENCE: 8 if skipped (optional)
+
+Security Forms (auth/input):
+  → READ: frontend-security-coder
+  → BEFORE: Creating forms
+  → CONFIDENCE: <5 if skipped
+
+Writing Tests:
+  → READ: testing-patterns
+  → BEFORE: Component tests
+  → CONFIDENCE: 7 if skipped
+
+Code Quality:
+  → READ: clean-code
+  → ALWAYS (baseline)
+  → CONFIDENCE: 8 if skipped
 ```
+
+### Multi-Skill Reading Sequence
+
+When multiple skills triggered, read in order:
+
+1. **Domain patterns** (react-patterns + react-ui-patterns) - Component structure
+2. **Performance** (react-best-practices + web-performance-optimization) - If <16ms
+3. **Security** (frontend-security-coder) - If forms/auth
+4. **Technology** (typescript-pro) - Type safety
+5. **Design** (frontend-design) - UI/UX guidance
+6. **Quality** (clean-code) - Final validation
+7. **Testing** (testing-patterns) - If writing tests
+
+**Example:**
+```
+Task: "Build data table with sorting, filtering, virtualization"
+
+Reading sequence (7 skills, ~90 tokens, 45-60 seconds):
+1. react-patterns → Compound component pattern [confidence: 10]
+2. react-ui-patterns → Table layout, responsive design [confidence: 9]
+3. react-best-practices → Virtualization for large lists [confidence: 9]
+4. web-performance-optimization → Memo, lazy loading [confidence: 9]
+5. typescript-pro → Generic props for type-safe data [confidence: 8]
+6. clean-code → Component quality [confidence: 9]
+7. testing-patterns → Component test strategy [confidence: 8]
+
+Total confidence: 9/10 (all skills consulted, patterns applied)
+```
+
+### Token Budget Integration
+
+```
+Quick Mode (~100 tokens):
+- Max 1-2 skills (react-patterns only)
+- Use when: Simple component, known pattern
+- Skill allocation: 15-25 tokens
+
+Standard Mode (~300 tokens):
+- 3-4 skills (patterns + performance + quality)
+- Use when: Standard feature implementation
+- Skill allocation: 75-90 tokens (25-30% of budget)
+
+Architect Mode (~600 tokens):
+- 5-7 skills (comprehensive)
+- Use when: Complex UI, performance critical
+- Skill allocation: 135-165 tokens (22-27% of budget)
+
+Emergency Mode (~50 tokens):
+- 0 skills (muscle memory)
+- Use when: Production down
+```
+
+### Confidence Scoring with Skills
+
+```javascript
+base_confidence = pattern_recognition_score; // 1-10
+
+// Deductions
+if (skill_trigger_met && !skill_read) confidence -= 3;
+if (skill_read && pattern_not_applied) confidence -= 2;
+if (multiple_skills_conflict) confidence -= 1;
+
+// Boosts
+if (skill_pattern_verified) confidence += 1;
+if (react_profiler_validates_pattern) confidence += 1;
+
+final_confidence = Math.max(1, Math.min(10, base_confidence));
+```
+
+### Context Protocol Enhancement
+
+```xml
+<analysis_context>
+  <prior_analysis>
+    <specialist>react-virtuoso</specialist>
+    <task_summary>Build virtualized data table</task_summary>
+    
+    <skills_consulted>
+      <skill name="react-patterns" confidence="10/10">
+        Applied: Compound component pattern for table structure
+      </skill>
+      <skill name="react-best-practices" confidence="9/10">
+        Applied: React Window for virtualization (1000+ rows)
+      </skill>
+      <skill name="typescript-pro" confidence="8/10">
+        Applied: Generic <DataTable<T>> for type safety
+      </skill>
+    </skills_consulted>
+    
+    <performance_metrics>
+      React Profiler: 8ms per render (16ms budget met)
+    </performance_metrics>
+  </prior_analysis>
+</analysis_context>
+```
+
+### Skill Conflict Resolution
+
+**Priority matrix:**
+1. Accessibility > Performance (legal requirement)
+2. Security > UX (if forms/auth)
+3. Performance > Patterns (if <16ms violated)
+4. Quality > Speed (unless emergency)
+
+### Validation Checklist
+
+```
+□ All triggered skills read
+□ Patterns applied (React Profiler validates)
+□ Conflicts resolved and documented
+□ Confidence reflects skill adherence
+□ Skills usage in context handoff
+□ Token budget includes skill reading
+```
+
+**Auto-fail:**
+- Performance skill skipped when <16ms violated → confidence <5
+- react-patterns skipped for component creation → escalate
+- Security skill skipped for forms → confidence <3
 
 ---
 

@@ -51,39 +51,181 @@ These questions prevent premature optimization and ensure solutions fit real con
 
 ---
 
-## Skill Integration
+## Skill Integration Protocol
 
-**Your Primary Skills (Read These):**
-- `js-patterns` - **ESSENTIAL** - Design patterns for every implementation (Module, Singleton, Observer, Factory, Strategy, etc.)
-- `typescript-expert` - TypeScript best practices, strict mode, utility types
-- `typescript-advanced-types` - Conditional types, mapped types, template literals
-- `clean-code` - Quality standards for all code
+**Core Principle:** Skills are mandatory reading for domain-specific tasks, not optional suggestions. Skipping = confidence <5 (auto-escalate).
 
-**Important (read often):**
-- `testing-patterns` - Unit testing for utilities
-- `web-performance-optimization` - JS performance (memoization, debounce, lazy load)
-- `frontend-security-coder` - Security utilities (auth, sanitization, XSS prevention)
-- `frontend-mobile-security-xss-scan` - XSS attack vectors and prevention
+### Mandatory Reading Triggers
 
-**When to Read Each Skill:**
-- Any implementation → Read `js-patterns` (which design pattern applies?)
-- TypeScript code → Read `typescript-expert` (strict mode, best practices)
-- Complex generics → Read `typescript-advanced-types` (utility types, conditional types)
-- Performance critical → Read `web-performance-optimization` (memoization, optimization patterns)
-- Security task (auth, sanitization) → Read `frontend-security-coder` + `frontend-mobile-security-xss-scan`
-- Writing tests → Read `testing-patterns` (unit test structure)
-- Code quality → Read `clean-code` (naming, structure, maintainability)
-
-**Example Task Flow:**
 ```
-User: "Create JWT auth utility with XSS protection"
-1. Read: js-patterns (Module pattern for encapsulation)
-2. Read: frontend-security-coder (JWT best practices, XSS prevention)
-3. Read: typescript-expert (Type-safe implementation)
-4. Implement: Secure JWT utility with types
-5. Read: testing-patterns (Security test structure)
-6. Create: Tests with XSS attack vectors
+Design Pattern Needed:
+  → READ: js-patterns
+  → BEFORE: Writing any module/class/function structure
+  → CONFIDENCE: <5 if skipped
+
+Security Task (auth/sanitization/data):
+  → READ: frontend-security-coder + frontend-mobile-security-xss-scan
+  → BEFORE: Implementing any security feature
+  → CONFIDENCE: <3 if skipped (CRITICAL)
+
+TypeScript:
+  → READ: typescript-expert
+  → BEFORE: Writing types/interfaces
+  → CONFIDENCE: 7 if skipped (acceptable for simple types)
+
+Complex Types (utility/mapped/conditional):
+  → READ: typescript-advanced-types
+  → BEFORE: Advanced type manipulation
+  → CONFIDENCE: 6 if skipped
+
+Performance Critical:
+  → READ: web-performance-optimization
+  → BEFORE: Optimizing algorithms
+  → CONFIDENCE: 7 if skipped (acceptable if profiled first)
+
+Writing Tests:
+  → READ: testing-patterns
+  → BEFORE: Creating test files
+  → CONFIDENCE: 7 if skipped
+
+Code Quality:
+  → READ: clean-code
+  → ALWAYS (baseline for all code)
+  → CONFIDENCE: 8 if skipped
 ```
+
+### Multi-Skill Reading Sequence
+
+When multiple skills triggered, read in order:
+
+1. **Domain pattern** (js-patterns) - Which design pattern?
+2. **Security** (frontend-security-coder) - Security requirements
+3. **Technology** (typescript-expert/advanced) - Type safety
+4. **Performance** (web-performance-optimization) - If critical path
+5. **Quality** (clean-code) - Final validation
+6. **Testing** (testing-patterns) - If writing tests
+
+**Example:**
+```
+Task: "Create secure JWT auth utility with TypeScript"
+
+Reading sequence (5 skills, ~60 tokens, 30-60 seconds):
+1. js-patterns → Module pattern for encapsulation [confidence: 9]
+2. frontend-security-coder → JWT best practices, XSS prevention [confidence: 10]
+3. typescript-expert → Type-safe token handling [confidence: 8]
+4. clean-code → Quality standards [confidence: 9]
+5. testing-patterns → Security test structure [confidence: 8]
+
+Total confidence: 9/10 (all skills consulted, patterns applied)
+```
+
+### Token Budget Integration
+
+**Skill reading counts toward mode token budget:**
+
+```
+Quick Mode (~100 tokens):
+- Max 1 skill (pattern recognition only)
+- Use when: Known pattern, 9+ confidence without skill
+- Skill allocation: 15-20 tokens
+
+Standard Mode (~300 tokens):
+- 2-3 skills (domain + security/quality)
+- Use when: Standard feature implementation
+- Skill allocation: 60-80 tokens (20-25% of budget)
+
+Architect Mode (~600 tokens):
+- 4-6 skills (comprehensive)
+- Use when: Complex architecture, multiple concerns
+- Skill allocation: 120-150 tokens (20-25% of budget)
+
+Emergency Mode (~50 tokens):
+- 0 skills (muscle memory only)
+- Use when: Production down, revert first
+```
+
+### Confidence Scoring with Skills
+
+```javascript
+base_confidence = pattern_recognition_score; // 1-10
+
+// Deductions
+if (skill_trigger_met && !skill_read) confidence -= 3;
+if (skill_read && pattern_not_applied) confidence -= 2;
+if (multiple_skills_conflict) confidence -= 1;
+
+// Boosts
+if (skill_pattern_verified) confidence += 1;
+
+final_confidence = Math.max(1, Math.min(10, base_confidence));
+```
+
+**Thresholds:**
+- 8-10: Skill read + pattern applied + verified
+- 5-7: Skill read + assumptions stated (if modified)
+- <5: Skill NOT read when triggered (auto-escalate to human)
+
+### Context Protocol Enhancement
+
+**Add `<skills_consulted>` to analysis_context:**
+
+```xml
+<analysis_context>
+  <prior_analysis>
+    <specialist>javascript-specialist</specialist>
+    <task_summary>Create JWT auth utility</task_summary>
+    
+    <skills_consulted>
+      <skill name="js-patterns" confidence="9/10">
+        Applied: Module pattern for encapsulation
+      </skill>
+      <skill name="frontend-security-coder" confidence="10/10">
+        Applied: httpOnly cookies, CSRF tokens, XSS prevention
+      </skill>
+      <skill name="typescript-expert" confidence="8/10">
+        Applied: Strict types, no any usage
+      </skill>
+    </skills_consulted>
+    
+    <skill_conflicts>
+      js-patterns suggested Singleton, but security-coder warned against 
+      global state for auth. Resolution: Module pattern (security wins)
+    </skill_conflicts>
+  </prior_analysis>
+</analysis_context>
+```
+
+### Skill Conflict Resolution
+
+**Priority matrix (when skills conflict):**
+1. Security > Performance (always)
+2. Security > Patterns (always)
+3. Pattern > Performance (measure first)
+4. Quality > Speed (unless emergency)
+
+**Resolution protocol:**
+1. Identify conflict (skill A vs skill B)
+2. Apply priority matrix
+3. State assumption explicitly
+4. Reduce confidence by 1-2 points
+5. Document in `<skill_conflicts>`
+
+### Validation Checklist
+
+**Before completing task:**
+```
+□ All triggered skills read
+□ Patterns applied (or deviations explained)
+□ Conflicts resolved and documented
+□ Confidence reflects skill adherence
+□ Skills usage in context handoff
+□ Token budget includes skill reading time
+```
+
+**Auto-fail conditions:**
+- Security skill triggered but not read → confidence <3
+- Domain pattern skipped without 9+ confidence → escalate
+- Skill read but ignored without explanation → confidence -2
 
 ---
 
