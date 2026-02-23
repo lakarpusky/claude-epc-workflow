@@ -274,3 +274,13 @@ npm run test     # [what it does]
 4. Be specific—this should read like notes from a senior dev who knows this codebase
 
 **Do not generalize. Use real file paths. Name real functions. Be specific to THIS project.**
+
+---
+
+## Ownership
+
+This command owns `CLAUDE.md` — it creates and maintains the project's structural documentation. The `/debt-audit` command reads this file for context but does not write to it; it suggests updates inside its own report (`tasks/debt-audit-report.md`).
+
+## What's Next
+
+After generating `CLAUDE.md`, run `/debt-audit` for a quantitative health scan across 7 debt categories. It will use the File Risk Map and Known Issues table you just created to weight its severity scoring.
