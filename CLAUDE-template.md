@@ -63,7 +63,7 @@ This project uses a multi-agent system orchestrated via the `/epc` command. The 
 **Key distinctions:**
 
 - **Direct mode**: Conservative — ask before committing, confirm scope changes, wait for approval on unrelated files.
-- **Agent-routed mode (`/epc`)**: Autonomous — agents trace, fix, commit atomically, and coordinate across domains using the orchestrator's judgment. The File Risk Map and Debugging Tips still apply as baseline context for all agents.
+- **Agent-routed mode (`/epc`)**: Autonomous — agents trace, fix, and coordinate across domains using the orchestrator's judgment. The File Risk Map and Debugging Tips still apply as baseline context for all agents.
 
 ### Shared Agent Protocols (Active Only in `/epc` Mode)
 
