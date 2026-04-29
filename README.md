@@ -20,7 +20,7 @@ Then in Claude Code:
 /effort high  # set session reasoning level
 ```
 
-For the optional personal-setup files (global CLAUDE.md, project template, karpathy-guidelines skill), see [COMPANIONS.md](./COMPANIONS.md).
+For the optional personal-setup files (global CLAUDE.md, project template, karpathy-guidelines skill) see [COMPANIONS.md](./COMPANIONS.md).
 
 ## Usage
 
