@@ -99,16 +99,10 @@ Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md
 
 Agents and `/epc` orchestrator are original to this repo.
 
-<<<<<<< Updated upstream
 ## Recommended Companions
-||||||| Stash base
-````markdown
-## Recommended Companions
-=======
+
 The optional `karpathy-guidelines` companion skill is derived from [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (MIT), which distills four principles from [Andrej Karpathy's tweet](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls. See [COMPANIONS.md](./COMPANIONS.md) for attribution details.
->>>>>>> Stashed changes
 
-<<<<<<< Updated upstream
 The files below are not part of the core system but pair well with it. They are independent: the agents + /epc work without them, and they work in any Claude Code setup without the agents.
 
 ```
@@ -212,7 +206,6 @@ You can adopt any subset independently. The agents work without the companions; 
 - [Claude Code Subagents complete guide](https://medium.com/@sathishkraju/claude-code-subagents-the-complete-guide-to-ai-agent-delegation-d0a9aba419d0)
 - [Mental model for Claude Code: Skills, Subagents, Plugins](https://levelup.gitconnected.com/a-mental-model-for-claude-code-skills-subagents-and-plugins-3dea9924bf05)
 
-||||||| Stash base
 The files below are not part of the core system but pair well with it. They are independent: the agents + /epc work without them, and they work in any Claude Code setup without the agents.
 
 ```
@@ -291,7 +284,6 @@ These files address different problems than the agents and /epc:
 - **karpathy-guidelines skill** = general-purpose behavioral nudges for code work
 
 You can adopt any subset independently. The agents work without the companions; the companions work without the agents. Bundling them in this repo is a convenience, not a requirement.
-````
 
 ## References
 
@@ -317,13 +309,8 @@ You can adopt any subset independently. The agents work without the companions; 
 - [Claude Code Subagents complete guide](https://medium.com/@sathishkraju/claude-code-subagents-the-complete-guide-to-ai-agent-delegation-d0a9aba419d0)
 - [Mental model for Claude Code: Skills, Subagents, Plugins](https://levelup.gitconnected.com/a-mental-model-for-claude-code-skills-subagents-and-plugins-3dea9924bf05)
 
-
-```markdown
-=======
->>>>>>> Stashed changes
 ## License
 
-<<<<<<< Updated upstream
 MIT for the core system (agents and /epc orchestrator), all original work.
 
 The optional `karpathy-guidelines` companion skill is a derivative of [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (MIT); modifications retain the same license. See [Recommended Companions](#recommended-companions) for attribution details.
@@ -333,17 +320,3 @@ The optional `karpathy-guidelines` companion skill is a derivative of [forrestch
 If you find this workflow useful, the highest-leverage thing you can do is verify each change against the docs above and adapt it to your stack. The configuration values here are tuned for Sonnet 4.6 + Pro and a frontend/JS workload. Other setups will want different `effort` and `maxTurns` values.
 
 Issues and PRs welcome.
-||||||| Stash base
-MIT for the core system (agents and /epc orchestrator), all original work.
-
-The optional `karpathy-guidelines` companion skill is a derivative of [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (MIT); modifications retain the same license. See [Recommended Companions](#recommended-companions) for attribution details.
-```
-
----
-
-If you find this workflow useful, the highest-leverage thing you can do is verify each change against the docs above and adapt it to your stack. The configuration values here are tuned for Sonnet 4.6 + Pro and a frontend/JS workload. Other setups will want different `effort` and `maxTurns` values.
-
-Issues and PRs welcome.
-=======
-MIT for the core system. The companion skill retains the original MIT license of the upstream work.
->>>>>>> Stashed changes
