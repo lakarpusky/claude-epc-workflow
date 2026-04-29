@@ -311,7 +311,7 @@ You can adopt any subset independently. The agents work without the companions; 
 
 ## License
 
-MIT for the core system (agents and /epc orchestrator), all original work.
+MIT for the core system (agents and /epc orchestrator) all original work.
 
 The optional `karpathy-guidelines` companion skill is a derivative of [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (MIT); modifications retain the same license. See [Recommended Companions](#recommended-companions) for attribution details.
 
