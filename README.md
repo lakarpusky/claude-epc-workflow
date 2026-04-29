@@ -2,7 +2,7 @@
 
 Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, testing, and Git — coordinated by an orchestrator command.
 
-> **Update — April 2026.** Anthropic shipped two changes that broke this workflow's quality (adaptive reasoning + a lowered default effort), and added a new official mechanism that fixes it (`effort:` and `memory:` frontmatter on subagents). This release rewrites every file against the current docs. **See [What Changed and Why](#what-changed-and-why) for the full breakdown with citations.**
+> **Update — April 2026.** Anthropic shipped two changes that broke this workflow's quality (adaptive reasoning + a lowered default effort), and added a new official mechanism that fixes it (`effort:` and `memory:` frontmatter on subagents). This release rewrites every file against the current docs. **See [What Changed and Why](#what-changed-and-why) for the full breakdown with citations.** A new [Recommended Companions](#recommended-companions) section documents the personal setup files (global CLAUDE.md, project template, karpathy-guidelines skill) that pair well with this system.
 
 ## What this is
 
@@ -26,6 +26,10 @@ git clone https://github.com/lakarpusky/claude-epc-workflow.git /tmp/claude-epc
 mkdir -p ~/.claude/agents ~/.claude/commands
 cp /tmp/claude-epc/agents/*.md ~/.claude/agents/
 cp /tmp/claude-epc/commands/epc.md ~/.claude/commands/
+```
+
+```markdown
+The above installs only the core system — orchestrator and agents. For optional companion files (global CLAUDE.md, project template, karpathy-guidelines skill), see [Recommended Companions](#recommended-companions) below.
 ```
 
 Then in Claude Code:
@@ -226,6 +230,89 @@ Automatic escalation triggers regardless of base score: ambiguous requirements, 
 - Not a replacement for understanding what Claude Code is doing — read the [official docs](https://code.claude.com/docs)
 - Not a guarantee — Anthropic ships changes; expect to re-tune periodically
 
+````markdown
+## Recommended Companions
+
+The files below are not part of the core system but pair well with it. They are independent: the agents + /epc work without them, and they work in any Claude Code setup without the agents.
+
+```
+~/.claude/
+├── CLAUDE.md                                         ← personal defaults (~30 lines)
+├── templates/
+│   └── PROJECT-CLAUDE.md                             ← copy to projects, fill in
+└── skills/
+    └── karpathy-guidelines/                          ← on-demand coding behavior
+        ├── SKILL.md
+        └── EXAMPLES.md
+```
+
+| File | Purpose | Loads when |
+|---|---|---|
+| `CLAUDE.md` (global) | Personal defaults: direct-mode rules, debugging discipline, bash hygiene | Every session |
+| `templates/PROJECT-CLAUDE.md` | Fillable template for per-project CLAUDE.md (tech stack, critical paths, conventions) | When you copy it to a project root |
+| `skills/karpathy-guidelines/` | Four principles that prevent common LLM coding mistakes | On code-writing tasks (description match) |
+
+### Global CLAUDE.md
+
+A lean (~30 line) personal defaults file: direct-mode rules, debugging discipline, bash hygiene. Every line answers Anthropic's [official test](https://code.claude.com/docs/en/best-practices): *"Would removing this cause Claude to make mistakes?"*
+
+The previous version of this file (in earlier iterations of this workflow) was 656 lines and duplicated content that now lives correctly in agent files. Per [Anthropic's guidance](https://code.claude.com/docs/en/best-practices): *"Bloated CLAUDE.md files cause Claude to ignore your actual instructions."* The official recommendation is under 200 lines.
+
+### Project template
+
+`templates/PROJECT-CLAUDE.md` is copied to each project's root and filled in. ~80% comments and prompts that guide what to include (tech stack, architecture, critical paths, file risk map) and explicit reminders to cut anything generic.
+
+### karpathy-guidelines skill
+
+A third-party skill that encodes four behavioral principles distilled from [Andrej Karpathy's observations on LLM coding pitfalls](https://x.com/karpathy/status/2015883857489522876) by [Forrest Chang](https://github.com/forrestchang) ([andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills), MIT licensed):
+
+1. **Think Before Coding** — surface assumptions, present interpretations, push back when warranted
+2. **Simplicity First** — minimum code that solves the problem, no speculative abstractions
+3. **Surgical Changes** — touch only what the request requires, match existing style
+4. **Goal-Driven Execution** — define verifiable success criteria, write tests that reproduce bugs first
+
+**This is a derivative work** of Forrest Chang's upstream skill. Two adaptations:
+
+- **Tightened skill description** for more reliable activation — explicit `MUST ACTIVATE` directive plus trigger verbs (implement, fix, refactor, build, etc.).
+- **EXAMPLES.md ported to JavaScript/TypeScript and React** — the upstream uses Python. All examples were rewritten in JS/TS for stack alignment, plus 3 React-specific examples added (don't refactor unrelated hooks while memoizing, don't reach for Context unprompted, don't optimize without Profiler data).
+
+The four principles themselves are unchanged from the upstream. Credit for the principles goes to Karpathy and Forrest Chang.
+
+### Install
+
+```bash
+mkdir -p ~/.claude/templates ~/.claude/skills/karpathy-guidelines
+
+# Global CLAUDE.md
+cp /tmp/claude-epc/CLAUDE.md ~/.claude/CLAUDE.md
+
+# Project template
+cp /tmp/claude-epc/templates/PROJECT-CLAUDE.md ~/.claude/templates/
+
+# karpathy-guidelines skill
+cp /tmp/claude-epc/skills/karpathy-guidelines/* ~/.claude/skills/karpathy-guidelines/
+```
+
+For new projects, copy the template into the repo root and fill in what applies:
+
+```bash
+cd ~/code/my-project
+cp ~/.claude/templates/PROJECT-CLAUDE.md ./CLAUDE.md
+$EDITOR ./CLAUDE.md
+```
+
+### Why these aren't part of the core system
+
+These files address different problems than the agents and /epc:
+
+- **Agents + /epc** = domain expertise and multi-domain task orchestration
+- **Global CLAUDE.md** = personal defaults across all Claude Code work
+- **Project template** = per-project context (tech stack, conventions, gotchas)
+- **karpathy-guidelines skill** = general-purpose behavioral nudges for code work
+
+You can adopt any subset independently. The agents work without the companions; the companions work without the agents. Bundling them in this repo is a convenience, not a requirement.
+````
+
 ## References
 
 **Official Anthropic docs (primary sources):**
@@ -250,9 +337,14 @@ Automatic escalation triggers regardless of base score: ambiguous requirements, 
 - [Claude Code Subagents complete guide](https://medium.com/@sathishkraju/claude-code-subagents-the-complete-guide-to-ai-agent-delegation-d0a9aba419d0)
 - [Mental model for Claude Code: Skills, Subagents, Plugins](https://levelup.gitconnected.com/a-mental-model-for-claude-code-skills-subagents-and-plugins-3dea9924bf05)
 
+
+```markdown
 ## License
 
-MIT
+MIT for the core system (agents and /epc orchestrator), all original work.
+
+The optional `karpathy-guidelines` companion skill is a derivative of [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (MIT); modifications retain the same license. See [Recommended Companions](#recommended-companions) for attribution details.
+```
 
 ---
 
