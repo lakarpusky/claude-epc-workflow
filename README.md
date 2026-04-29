@@ -2,7 +2,7 @@
 
 Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, testing, and Git — coordinated by an orchestrator command.
 
-Tested daily on Sonnet 4.6 / Pro.
+Tested daily on Sonnet 4.6 / Pro
 
 ## Install
 
@@ -87,12 +87,11 @@ Slash commands can't carry `effort` in frontmatter. Set the session level once w
 
 Adaptive reasoning + a lowered default effort silently degraded the previous version's quality. Fixed by adding `effort: high` and `memory: user` frontmatter to every subagent, removing token-budget instructions that suppressed thinking under the new model behavior, and restructuring `/epc` as a proper slash command.
 
-Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md).
+Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md)
 
 ## Scope
 
-**Covered:** Frontend JS/TS, React, Jest/RTL, Git workflows.
-
+**Covered:** Frontend JS/TS, React, Jest/RTL, Git workflows.    
 **Not covered:** Backend (beyond JS basics), Vue/Svelte/Angular, E2E (Playwright/Cypress), infrastructure/DevOps, mobile/native.
 
 ## Credits
