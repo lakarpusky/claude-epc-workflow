@@ -230,7 +230,6 @@ Automatic escalation triggers regardless of base score: ambiguous requirements, 
 - Not a replacement for understanding what Claude Code is doing — read the [official docs](https://code.claude.com/docs)
 - Not a guarantee — Anthropic ships changes; expect to re-tune periodically
 
-````markdown
 ## Recommended Companions
 
 The files below are not part of the core system but pair well with it. They are independent: the agents + /epc work without them, and they work in any Claude Code setup without the agents.
@@ -311,7 +310,6 @@ These files address different problems than the agents and /epc:
 - **karpathy-guidelines skill** = general-purpose behavioral nudges for code work
 
 You can adopt any subset independently. The agents work without the companions; the companions work without the agents. Bundling them in this repo is a convenience, not a requirement.
-````
 
 ## References
 
@@ -337,14 +335,11 @@ You can adopt any subset independently. The agents work without the companions; 
 - [Claude Code Subagents complete guide](https://medium.com/@sathishkraju/claude-code-subagents-the-complete-guide-to-ai-agent-delegation-d0a9aba419d0)
 - [Mental model for Claude Code: Skills, Subagents, Plugins](https://levelup.gitconnected.com/a-mental-model-for-claude-code-skills-subagents-and-plugins-3dea9924bf05)
 
-
-```markdown
 ## License
 
 MIT for the core system (agents and /epc orchestrator), all original work.
 
 The optional `karpathy-guidelines` companion skill is a derivative of [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) (MIT); modifications retain the same license. See [Recommended Companions](#recommended-companions) for attribution details.
-```
 
 ---
 
