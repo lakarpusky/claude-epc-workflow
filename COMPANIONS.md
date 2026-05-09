@@ -67,17 +67,6 @@ This is a derivative work. Two changes from Forrest Chang's original:
 
 The four principles themselves are unchanged from the upstream. Credit for the principles goes to Karpathy and Forrest Chang.
 
-## Why these aren't part of the core system
-
-These files address different problems than the agents and `/epc`:
-
-- **Agents + /epc** = domain expertise and multi-domain task orchestration
-- **Global CLAUDE.md** = personal defaults across all Claude Code work
-- **Project template** = per-project context (tech stack, conventions, gotchas)
-- **karpathy-guidelines skill** = general-purpose behavioral nudges for code work
-
-You can adopt any subset independently. Bundling them in this repo is a convenience, not a requirement.
-
 ## License
 
 The `karpathy-guidelines` skill is a derivative of MIT-licensed work; modifications retain the same license. Global CLAUDE.md and project template are MIT, original to this repo.
