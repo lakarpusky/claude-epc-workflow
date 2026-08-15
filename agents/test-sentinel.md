@@ -4,7 +4,7 @@ description: Test engineering specialist. Use proactively after feature implemen
 color: green
 model: inherit
 effort: high
-memory: user
+memory: local
 maxTurns: 15
 ---
 

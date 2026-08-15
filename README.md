@@ -8,9 +8,11 @@ Tested daily on Sonnet 4.6 / Pro.
 
 ```bash
 git clone https://github.com/lakarpusky/claude-epc-workflow.git /tmp/claude-epc
-mkdir -p ~/.claude/agents ~/.claude/commands
+mkdir -p ~/.claude/agents ~/.claude/commands ~/.claude/hooks
 cp /tmp/claude-epc/agents/*.md ~/.claude/agents/
 cp /tmp/claude-epc/commands/epc.md ~/.claude/commands/
+cp /tmp/claude-epc/hooks/verify-frontend.sh ~/.claude/hooks/
+chmod +x ~/.claude/hooks/verify-frontend.sh
 ```
 
 Then in Claude Code:
@@ -65,7 +67,7 @@ When the domain is obvious, skip `/epc` and call a specialist directly to save a
 | `react-virtuoso` | Components, renders, state, hooks, accessibility |
 | `test-sentinel` | Jest, RTL, integration tests, coverage, flaky-test triage |
 
-Each runs in its own context window with `effort: high` and persistent `memory: user`. Agents return text summaries to the orchestrator, which restates relevant findings in plain English when chaining specialists.
+Each runs in its own context window with `effort: high` and persistent memory: `memory: local` for the three specialists (per-project, kept out of version control), `memory: user` for `git-wizard` (portable git conventions). The two implementation agents (`javascript-specialist`, `react-virtuoso`) also run a `SubagentStop` gate that blocks their output on `tsc --noEmit` / `eslint` failure. Agents return text summaries to the orchestrator, which restates relevant findings in plain English when chaining specialists.
 
 ## Tuning by model
 
@@ -82,6 +84,12 @@ Slash commands can't carry `effort` in frontmatter. Set the session level once w
 ```json
 { "effortLevel": "high" }
 ```
+
+## What changed in August 2026
+
+Synced against the current Claude Code docs. Specialist memory is now scoped per project (`memory: user` → `local`) to keep codebase notes out of version control; a `SubagentStop` verification gate (`tsc --noEmit` + `eslint`) was added to `javascript-specialist` and `react-virtuoso` so broken code never folds back into the orchestrator; the stale note that the built-in Explore agent runs on Haiku was corrected (it inherits the session model as of v2.1.198); and `/epc` was locked to manual invocation with `disable-model-invocation: true`.
+
+Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md).
 
 ## What changed in April 2026
 

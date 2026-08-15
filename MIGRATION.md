@@ -1,4 +1,24 @@
-# Migration — April 2026
+# Migration
+
+## August 2026
+
+Synced against the current Claude Code docs (verified 2026-08-15). No deprecated frontmatter fields were found; these are targeted correctness and quality changes.
+
+**Memory scoped per project.** The three specialists move `memory: user` → `memory: local`. Their memory records codebase-specific detail (data shapes, hot paths, component architecture); `user` pooled that globally across every repo, and `project` would commit it into version control — undesirable for public repos. `local` silos it per project under `.claude/agent-memory-local/` without committing. `git-wizard` stays `user` (portable git conventions, stored in `$HOME`, never committed). Doc: [Enable persistent memory](https://code.claude.com/docs/en/sub-agents#enable-persistent-memory)
+
+**Verification gate on the implementation agents.** `javascript-specialist` and `react-virtuoso` gain a `SubagentStop` hook (`hooks/verify-frontend.sh`) that runs `tsc --noEmit` + `eslint` when the agent finishes. On failure it exits 2 with the compiler/linter output, which Claude Code feeds back so the agent fixes the code before its result folds into the orchestrator's context. Loop-safe via `stop_hook_active` (one enforced fix cycle, never an infinite loop), inert outside JS/TS projects (no `package.json` → pass), and it skips a check when its tool isn't installed. `test-sentinel` is deliberately excluded — a typecheck gate fights its TDD red phase (a test for not-yet-written code fails typecheck by design) and its intentional `.skip` bug repros. Docs: [Define hooks for subagents](https://code.claude.com/docs/en/sub-agents#define-hooks-for-subagents) · [Hook exit codes](https://code.claude.com/docs/en/hooks)
+
+**Corrected the Explore/Haiku claim (item #8 in the April entry).** As of Claude Code v2.1.198 the built-in Explore agent inherits the session model rather than always running on Haiku; on a Sonnet session, recon runs on Sonnet. The `epc.md` text was updated. To pin recon to a cheaper model, define a user or project subagent named `Explore` with `model: haiku`. Doc: [Built-in subagents](https://code.claude.com/docs/en/sub-agents#built-in-subagents)
+
+**`/epc` locked to manual invocation.** Added `disable-model-invocation: true` so the orchestrator (which has side effects) only fires when you type `/epc`. Remove it to allow programmatic or automatic invocation. Doc: [Slash commands](https://code.claude.com/docs/en/slash-commands)
+
+**Not changed, on purpose.** `git-wizard` keeps `effort: high` (it drives the risk/confidence scoring, and it produces no app code to gate), and every specialist keeps `effort: high` — the Pro ceiling, since `xhigh`/`max` are Opus-only. The April regression fixes below still hold: both `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1` (Opus 4.6 / Sonnet 4.6 only) and the high→medium default-effort drop are documented in the current [model configuration docs](https://code.claude.com/docs/en/model-config#adjust-effort-level).
+
+> **Memory migration note:** `memory: local` starts fresh per project. Existing global `~/.claude/agent-memory/<agent>/` files are not deleted, just no longer loaded — migrate any notes worth keeping into each project's `.claude/agent-memory-local/<agent>/`.
+
+---
+
+## April 2026
 
 This release rewrites every file in this repo against the current Claude Code documentation. The previous version of the workflow was tuned for fixed thinking budgets; Anthropic has since shipped adaptive reasoning, which silently degraded the quality of the old configuration.
 
@@ -59,6 +79,8 @@ The previous file had agent-style frontmatter but was invoked as a slash command
 ### 8. Added Explore agent reconnaissance to /epc
 
 The [built-in Explore agent](https://code.claude.com/docs/en/sub-agents#built-in-subagents) is read-only and runs on Haiku — designed for "where is X / find usages of Y" work. Routing reconnaissance there before invoking specialists saves 1–2 specialist turns per task.
+
+> **Update (Aug 2026):** As of Claude Code v2.1.198 the Explore agent inherits the session model rather than always running on Haiku; the `epc.md` text was corrected accordingly. See the August 2026 entry at the top.
 
 ## References
 
