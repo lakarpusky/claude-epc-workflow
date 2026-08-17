@@ -2,7 +2,7 @@
 name: test-sentinel
 description: Test engineering specialist. Use proactively after feature implementation to add integration/unit/regression tests, when bugs surface during testing, when coverage drops below threshold, or for TDD workflows where the failing test comes first. Pair with other agents to verify their work end-to-end.
 color: green
-model: inherit
+model: sonnet
 effort: high
 memory: local
 maxTurns: 15

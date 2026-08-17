@@ -2,7 +2,7 @@
 
 Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, testing, and Git — coordinated by an orchestrator command.
 
-Tested daily on Sonnet 4.6 / Pro.
+Tested daily on Claude Code Pro (Opus 5 session, Sonnet 5 specialists).
 
 ## Install
 
@@ -67,17 +67,17 @@ When the domain is obvious, skip `/epc` and call a specialist directly to save a
 | `react-virtuoso` | Components, renders, state, hooks, accessibility |
 | `test-sentinel` | Jest, RTL, integration tests, coverage, flaky-test triage |
 
-Each runs in its own context window with `effort: high` and persistent memory: `memory: local` for the three specialists (per-project, kept out of version control), `memory: user` for `git-wizard` (portable git conventions). The two implementation agents (`javascript-specialist`, `react-virtuoso`) also run a `SubagentStop` gate that blocks their output on `tsc --noEmit` / `eslint` failure. Agents return text summaries to the orchestrator, which restates relevant findings in plain English when chaining specialists.
+Each runs in its own context window with `effort: high` and persistent memory: `memory: local` for the three specialists (per-project, kept out of version control), `memory: user` for `git-wizard` (portable git conventions). The two implementation agents (`javascript-specialist`, `react-virtuoso`) also run a `SubagentStop` gate that blocks their output on `tsc --noEmit` / `eslint` failure. All four specialists are pinned to `model: sonnet` (Sonnet 5) and a bundled `Explore` override keeps reconnaissance on Sonnet too, while the orchestrator runs on your session model — so a full fan-out doesn't drain your Opus 5 headroom on Pro's shared pool. Agents return text summaries to the orchestrator, which restates relevant findings in plain English when chaining specialists.
 
 ## Tuning by model
 
 | Setup | Adjustment |
 |---|---|
-| Sonnet 4.6 / Pro | Default. `effort: high` on agents. `/effort high` session-wide. |
-| Opus 4.6 / Max | Same as default — `high` and `max` are the meaningful levels. |
-| Opus 4.7 / Max | Optionally bump agents to `effort: xhigh`. |
-| Quality still degraded | `export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1` (Opus 4.6 / Sonnet 4.6 only). |
-| Cost-sensitive | Drop agents to `effort: medium`. Skip `/epc` for one-domain tasks. |
+| Sonnet 5 / Pro | Default. Specialists pinned `model: sonnet`, `effort: high`. |
+| Opus 5 session / Pro | Keep specialists on Sonnet 5 — Opus and Sonnet share one Pro pool, so an Opus fan-out drains your interactive headroom. Escalate a single specialist to `model: opus` + `effort: xhigh` only for hard architecture. |
+| Max | Sonnet and Opus draw from separate pools; running specialists on Opus 5 is affordable there. |
+| Cost / limit-sensitive | Drop mechanical agents to `effort: medium`; skip `/epc` for one-domain tasks. |
+| Legacy 4.6 models | `export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1` restores fixed thinking — 4.6 / Opus 4.6 only; no effect on Sonnet 5 or Opus 4.7+. |
 
 Slash commands can't carry `effort` in frontmatter. Set the session level once with `/effort high` or persist in `~/.claude/settings.json`:
 
@@ -87,7 +87,7 @@ Slash commands can't carry `effort` in frontmatter. Set the session level once w
 
 ## What changed in August 2026
 
-Synced against the current Claude Code docs. Specialist memory is now scoped per project (`memory: user` → `local`) to keep codebase notes out of version control; a `SubagentStop` verification gate (`tsc --noEmit` + `eslint`) was added to `javascript-specialist` and `react-virtuoso` so broken code never folds back into the orchestrator; the stale note that the built-in Explore agent runs on Haiku was corrected (it inherits the session model as of v2.1.198); and `/epc` was locked to manual invocation with `disable-model-invocation: true`.
+Synced against the current Claude Code docs. Specialist memory is now scoped per project (`memory: user` → `local`) to keep codebase notes out of version control; a `SubagentStop` verification gate (`tsc --noEmit` + `eslint`) was added to `javascript-specialist` and `react-virtuoso` so broken code never folds back into the orchestrator; the stale note that the built-in Explore agent runs on Haiku was corrected (it inherits the session model as of v2.1.198); `/epc` was locked to manual invocation with `disable-model-invocation: true`; and all four specialists were pinned to Sonnet 5 (with a Sonnet-pinned `Explore` override) so a multi-agent fan-out doesn't drain the shared Opus/Sonnet usage pool on Pro.
 
 Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md).
 

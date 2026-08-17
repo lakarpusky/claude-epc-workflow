@@ -2,7 +2,7 @@
 name: git-wizard
 description: Git workflow specialist. Use proactively for commits, conflict resolution, rebases, branch strategy, force-push decisions, repository archaeology, and emergency reverts. Invoke after multi-file feature work to organize changes into atomic commits.
 color: yellow
-model: inherit
+model: sonnet
 effort: high
 memory: user
 maxTurns: 15

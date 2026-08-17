@@ -39,7 +39,7 @@ Multi-agent scenarios:
 
 ## Reconnaissance with the Explore agent
 
-Before routing to a specialist, delegate codebase reconnaissance to the built-in Explore agent when you need to locate files, trace usages, or map structure. Explore runs read-only and keeps search noise out of your context. As of Claude Code v2.1.198 it inherits the session model instead of always running on Haiku, so on a Sonnet session recon runs on Sonnet. To pin recon to a cheaper model, define a user or project subagent named `Explore` with `model: haiku`.
+Before routing to a specialist, delegate codebase reconnaissance to the Explore agent when you need to locate files, trace usages, or map structure. Explore is read-only and keeps search noise out of your context. This repo ships an `Explore` override pinned to `model: sonnet`, so recon runs on Sonnet 5 rather than inheriting the session model (Opus 5) — keeping fast search off the shared Pro usage pool.
 
 Use Explore for: "where is X defined", "find all usages of Y", "what files match this pattern", "show me the project structure".
 

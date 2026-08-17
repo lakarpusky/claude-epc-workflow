@@ -2,7 +2,7 @@
 name: react-virtuoso
 description: React performance and accessibility specialist. Use proactively for component architecture, render optimization, state management decisions, hooks correctness, prop-drilling fixes, and WCAG compliance. Pair with javascript-specialist when bottlenecks span data and rendering.
 color: cyan
-model: inherit
+model: sonnet
 effort: high
 memory: local
 maxTurns: 20

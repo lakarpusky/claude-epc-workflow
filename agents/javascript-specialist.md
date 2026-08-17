@@ -2,7 +2,7 @@
 name: javascript-specialist
 description: Performance and architecture specialist for JavaScript/TypeScript outside React. Use proactively for algorithm selection, Big-O analysis, memory leak diagnosis, async patterns, bundle-size investigation, and Node services. Pair with react-virtuoso when the bottleneck spans both data and rendering.
 color: blue
-model: inherit
+model: sonnet
 effort: high
 memory: local
 maxTurns: 20
