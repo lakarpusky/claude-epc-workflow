@@ -1,6 +1,6 @@
 # Claude EPC Workflow
 
-Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, testing, and Git — coordinated by an orchestrator command.
+Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, unit/integration testing, end-to-end (Playwright) testing, native iOS (Swift/SwiftUI), Git, and the terminal dev environment (Neovim/tmux/Alacritty/dotfiles) — coordinated by an orchestrator command.
 
 Tested daily on Claude Code Pro (Opus 5 session, Sonnet 5 specialists).
 
@@ -56,6 +56,8 @@ When the domain is obvious, skip `/epc` and call a specialist directly to save a
 @react-virtuoso fix re-renders in Dashboard
 @test-sentinel write integration tests for the cart flow
 @javascript-specialist optimize this O(n²) loop
+@env-artisan set up native LSP for typescript in nvim
+@e2e-pilot write a Playwright test for the checkout journey
 ```
 
 ## Agents
@@ -66,8 +68,14 @@ When the domain is obvious, skip `/epc` and call a specialist directly to save a
 | `javascript-specialist` | Algorithms, performance, memory, async, bundle analysis |
 | `react-virtuoso` | Components, renders, state, hooks, accessibility |
 | `test-sentinel` | Jest, RTL, integration tests, coverage, flaky-test triage |
+| `env-artisan` | Neovim, tmux, Alacritty, native LSP, plugins, dotfiles (Stow) |
+| `e2e-pilot` | Playwright E2E for React — journeys, locators, flake stabilization, CI/CD |
+| `ios-architect` | Enterprise iOS — SwiftUI/UIKit, Swift 6 concurrency, SwiftData, MVVM, animations, auth |
+| `azeroth-smith` | WoW 1.12.1 (Vanilla) addon dev — Lua 5.0, frames, events, SavedVariables |
 
-Each runs in its own context window with `effort: high` and persistent memory: `memory: local` for the three specialists (per-project, kept out of version control), `memory: user` for `git-wizard` (portable git conventions). The two implementation agents (`javascript-specialist`, `react-virtuoso`) also run a `SubagentStop` gate that blocks their output on `tsc --noEmit` / `eslint` failure. All four specialists are pinned to `model: sonnet` (Sonnet 5) and a bundled `Explore` override keeps reconnaissance on Sonnet too, while the orchestrator runs on your session model — so a full fan-out doesn't drain your Opus 5 headroom on Pro's shared pool. Agents return text summaries to the orchestrator, which restates relevant findings in plain English when chaining specialists.
+Each runs in its own context window with `effort: high` and persistent memory: `memory: local` for the three specialists (per-project, kept out of version control), `memory: user` for `git-wizard` and `env-artisan` (portable, machine-global conventions). The two implementation agents (`javascript-specialist`, `react-virtuoso`) also run a `SubagentStop` gate that blocks their output on `tsc --noEmit` / `eslint` failure. Every specialist is pinned to `model: sonnet` (Sonnet 5) and a bundled `Explore` override keeps reconnaissance on Sonnet too, while the orchestrator runs on your session model — so a full fan-out doesn't drain your Opus 5 headroom on Pro's shared pool. Agents return text summaries to the orchestrator, which restates relevant findings in plain English when chaining specialists.
+
+> `azeroth-smith` covers a separate domain from the frontend agents — World of Warcraft 1.12.1 (Vanilla) addon development in Lua 5.0 — included here as part of the personal agent set.
 
 ## Tuning by model
 
@@ -87,7 +95,7 @@ Slash commands can't carry `effort` in frontmatter. Set the session level once w
 
 ## What changed in August 2026
 
-Synced against the current Claude Code docs. Specialist memory is now scoped per project (`memory: user` → `local`) to keep codebase notes out of version control; a `SubagentStop` verification gate (`tsc --noEmit` + `eslint`) was added to `javascript-specialist` and `react-virtuoso` so broken code never folds back into the orchestrator; the stale note that the built-in Explore agent runs on Haiku was corrected (it inherits the session model as of v2.1.198); `/epc` was locked to manual invocation with `disable-model-invocation: true`; and all four specialists were pinned to Sonnet 5 (with a Sonnet-pinned `Explore` override) so a multi-agent fan-out doesn't drain the shared Opus/Sonnet usage pool on Pro.
+Synced against the current Claude Code docs. Specialist memory is now scoped per project (`memory: user` → `local`) to keep codebase notes out of version control; a `SubagentStop` verification gate (`tsc --noEmit` + `eslint`) was added to `javascript-specialist` and `react-virtuoso` so broken code never folds back into the orchestrator; the stale note that the built-in Explore agent runs on Haiku was corrected (it inherits the session model as of v2.1.198); `/epc` was locked to manual invocation with `disable-model-invocation: true`; all four code specialists were pinned to Sonnet 5 (with a Sonnet-pinned `Explore` override) so a multi-agent fan-out doesn't drain the shared Opus/Sonnet usage pool on Pro; and an `env-artisan` agent was added for the terminal dev environment (Neovim/tmux/Alacritty/dotfiles), wired into `/epc` routing.
 
 Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md).
 
@@ -99,9 +107,9 @@ Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md
 
 ## Scope
 
-**Covered:** Frontend JS/TS, React, Jest/RTL, Git workflows.
+**Covered:** Frontend JS/TS, React, Jest/RTL, Playwright E2E (incl. CI/CD pipelines: GitHub Actions, Jenkins, Azure DevOps), native iOS (Swift, SwiftUI/UIKit, SwiftData, Swift 6 concurrency), Git workflows, and the terminal dev environment (Neovim, tmux, Alacritty, GNU Stow dotfiles).
 
-**Not covered:** Backend (beyond JS basics), Vue/Svelte/Angular, E2E (Playwright/Cypress), infrastructure/DevOps, mobile/native.
+**Not covered:** Backend (beyond JS basics), Vue/Svelte/Angular, Cypress, infrastructure/DevOps, Android & cross-platform mobile (React Native/Flutter), games.
 
 ## Credits
 
