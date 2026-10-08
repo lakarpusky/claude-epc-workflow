@@ -19,6 +19,10 @@ Then in Claude Code: `/agents` to verify they loaded, `/effort high` to set the 
 
 The code agents reference an optional `code-comments` skill — install it for the comment discipline (they run fine without it). That plus the other personal-setup files live in [COMPANIONS.md](./COMPANIONS.md).
 
+## Permissions baseline
+
+The repo ships a sanitized `settings.json` (user scope) and `settings.local.json` (project scope) as a reference to diff against your own — not to copy wholesale. They lean cautious (force-push and installs gated, a commit-scope warning hook), with project-specific rules stripped. Lift what fits, adapt the rest.
+
 ## Usage
 
 ```
