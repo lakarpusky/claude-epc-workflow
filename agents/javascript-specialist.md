@@ -6,6 +6,7 @@ model: sonnet
 effort: high
 memory: local
 maxTurns: 20
+skills: [code-comments]
 hooks:
   Stop:
     - hooks:

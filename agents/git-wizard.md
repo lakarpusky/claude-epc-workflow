@@ -1,10 +1,11 @@
 ---
 name: git-wizard
 description: Git workflow specialist. Use proactively for commits, conflict resolution, rebases, branch strategy, force-push decisions, repository archaeology, and emergency reverts. Invoke after multi-file feature work to organize changes into atomic commits.
+tools: Bash, Read, Grep, Glob, Edit
 color: yellow
 model: sonnet
 effort: high
-memory: user
+memory: local
 maxTurns: 15
 ---
 
