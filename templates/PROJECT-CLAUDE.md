@@ -23,20 +23,6 @@
      - How is it deployed (SaaS, self-hosted, mobile, internal tool)?
 -->
 
-## Tech stack
-
-<!-- Only the non-obvious choices. If it's a vanilla React + Vite + TypeScript
-     project, you don't need to list those — Claude will infer them.
-     Mention:
-     - Framework + version if non-default (e.g., UmiJS 4, Next.js App Router)
-     - State management library if not Redux Toolkit (e.g., DVA, Zustand, Jotai)
-     - UI library if it shapes patterns (e.g., Ant Design Pro v4, shadcn/ui)
-     - Build tool if non-default
-     - HTTP client if it has interceptor logic (e.g., umi-request, custom axios)
-     - Testing stack if it constrains test patterns
-     - Auth strategy if Claude needs to know it for API work
--->
-
 ## Architecture
 
 <!-- ### Entry points

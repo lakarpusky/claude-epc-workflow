@@ -1,8 +1,8 @@
 # Claude EPC Workflow
 
-Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, unit/integration testing, end-to-end (Playwright) testing, native iOS (Swift/SwiftUI), Git, and the terminal dev environment (Neovim/tmux/Alacritty/dotfiles) — coordinated by an orchestrator command.
+Multi-agent system for frontend development in Claude Code. Specialized agents for JavaScript, React, unit/integration testing, Playwright E2E, Progressive Web Apps, and Git — coordinated by an orchestrator command.
 
-Tested daily on Claude Code Pro (Opus 5 session, Sonnet 5 specialists).
+Tested daily on Claude Code Pro — Sonnet 5 for the session and specialists, Explore on Haiku. Opus 5 is available if you want it; specialists stay on Sonnet so a fan-out doesn't drain Pro's shared pool (see [Tuning by model](#tuning-by-model)).
 
 ## Install
 
@@ -10,19 +10,14 @@ Tested daily on Claude Code Pro (Opus 5 session, Sonnet 5 specialists).
 git clone https://github.com/lakarpusky/claude-epc-workflow.git /tmp/claude-epc
 mkdir -p ~/.claude/agents ~/.claude/commands ~/.claude/hooks
 cp /tmp/claude-epc/agents/*.md ~/.claude/agents/
-cp /tmp/claude-epc/commands/epc.md ~/.claude/commands/
+cp /tmp/claude-epc/commands/*.md ~/.claude/commands/
 cp /tmp/claude-epc/hooks/verify-frontend.sh ~/.claude/hooks/
 chmod +x ~/.claude/hooks/verify-frontend.sh
 ```
 
-Then in Claude Code:
+Then in Claude Code: `/agents` to verify they loaded, `/effort high` to set the session reasoning level.
 
-```
-/agents       # verify agents loaded
-/effort high  # set session reasoning level
-```
-
-For the optional personal-setup files (global CLAUDE.md, project template, karpathy-guidelines skill), see [COMPANIONS.md](./COMPANIONS.md).
+The code agents reference an optional `code-comments` skill — install it for the comment discipline (they run fine without it). That plus the other personal-setup files live in [COMPANIONS.md](./COMPANIONS.md).
 
 ## Usage
 
@@ -40,24 +35,15 @@ Modes are analytical depth, not token caps:
 | `unbounded` | Deep architectural exploration |
 | `emergency` | Production down; revert first, investigate after |
 
-Examples:
+When the domain is obvious, skip `/epc` and call a specialist directly:
 
 ```
-/epc quick fix the null check in UserCard
-/epc standard add a filter to the product list
 /epc architect redesign state management
-/epc emergency revert last commit
-```
-
-When the domain is obvious, skip `/epc` and call a specialist directly to save an orchestration turn:
-
-```
-@git-wizard squash the last 5 commits
 @react-virtuoso fix re-renders in Dashboard
 @test-sentinel write integration tests for the cart flow
-@javascript-specialist optimize this O(n²) loop
-@env-artisan set up native LSP for typescript in nvim
 @e2e-pilot write a Playwright test for the checkout journey
+@pwa-architect make the app installable and work offline
+@git-wizard squash the last 5 commits
 ```
 
 ## Agents
@@ -68,55 +54,36 @@ When the domain is obvious, skip `/epc` and call a specialist directly to save a
 | `javascript-specialist` | Algorithms, performance, memory, async, bundle analysis |
 | `react-virtuoso` | Components, renders, state, hooks, accessibility |
 | `test-sentinel` | Jest, RTL, integration tests, coverage, flaky-test triage |
-| `env-artisan` | Neovim, tmux, Alacritty, native LSP, plugins, dotfiles (Stow) |
-| `e2e-pilot` | Playwright E2E for React — journeys, locators, flake stabilization, CI/CD |
-| `ios-architect` | Enterprise iOS — SwiftUI/UIKit, Swift 6 concurrency, SwiftData, MVVM, animations, auth |
-| `azeroth-smith` | WoW 1.12.1 (Vanilla) addon dev — Lua 5.0, frames, events, SavedVariables |
+| `e2e-pilot` | Playwright E2E — journeys, locators, flake stabilization, CI/CD |
+| `pwa-architect` | Service workers, Workbox caching, manifest, offline/installability, iOS Safari limits |
 
-Each runs in its own context window with `effort: high` and persistent memory: `memory: local` for the three specialists (per-project, kept out of version control), `memory: user` for `git-wizard` and `env-artisan` (portable, machine-global conventions). The two implementation agents (`javascript-specialist`, `react-virtuoso`) also run a `SubagentStop` gate that blocks their output on `tsc --noEmit` / `eslint` failure. Every specialist is pinned to `model: sonnet` (Sonnet 5) and a bundled `Explore` override keeps reconnaissance on Sonnet too, while the orchestrator runs on your session model — so a full fan-out doesn't drain your Opus 5 headroom on Pro's shared pool. Agents return text summaries to the orchestrator, which restates relevant findings in plain English when chaining specialists.
+Each runs in its own context window at `effort: high` with `memory: local` (per-project, uncommitted). `javascript-specialist` and `react-virtuoso` add a `SubagentStop` gate that blocks their output on `tsc --noEmit` / `eslint` failure. The five code-writing agents preload the `code-comments` discipline skill. Specialists run on Sonnet 5, Explore on Haiku, the orchestrator on your session model; agents return text summaries that the orchestrator restates when chaining them.
 
-> `azeroth-smith` covers a separate domain from the frontend agents — World of Warcraft 1.12.1 (Vanilla) addon development in Lua 5.0 — included here as part of the personal agent set.
+## Project commands
+
+Two standalone, manual-invoke commands for project health — independent of `/epc`:
+
+- **`/analyze-codebase`** — scans the repo and generates a `CLAUDE.md` with the tech stack, architecture, critical paths, conventions, and a file-risk map. Run once per project to give future sessions deep context. Owns `CLAUDE.md`.
+- **`/debt-audit`** `[category | quick | compare]` — scans technical debt across seven categories, scores findings by impact, and writes a prioritized report to `tasks/debt-audit-report.md`. Reads `CLAUDE.md` for context; read-only, never edits code.
+
+Run `/analyze-codebase` first; `/debt-audit` then uses its file-risk map and known-issues table to weight severity.
 
 ## Tuning by model
 
 | Setup | Adjustment |
 |---|---|
-| Sonnet 5 / Pro | Default. Specialists pinned `model: sonnet`, `effort: high`. |
-| Opus 5 session / Pro | Keep specialists on Sonnet 5 — Opus and Sonnet share one Pro pool, so an Opus fan-out drains your interactive headroom. Escalate a single specialist to `model: opus` + `effort: xhigh` only for hard architecture. |
-| Max | Sonnet and Opus draw from separate pools; running specialists on Opus 5 is affordable there. |
-| Cost / limit-sensitive | Drop mechanical agents to `effort: medium`; skip `/epc` for one-domain tasks. |
-| Legacy 4.6 models | `export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1` restores fixed thinking — 4.6 / Opus 4.6 only; no effect on Sonnet 5 or Opus 4.7+. |
+| **Pro** (default) | Sonnet 5 is the default for the session, orchestrator, and specialists; Explore on Haiku. Opus 5 is available, but it shares one usage pool with Sonnet on Pro — keep specialists on Sonnet so a fan-out doesn't drain your limits, and run the orchestrator on Opus only when the routing judgment is worth the spend. |
+| **Max** | More Opus headroom than Pro — run the session/orchestrator on Opus 5 for routing judgment, and keep specialists on Sonnet 5 (still the efficient default). Escalate one specialist to `model: opus` + `effort: xhigh` only for hard architecture. |
+| **Cost-sensitive** | Drop mechanical agents to `effort: medium`; skip `/epc` for one-domain tasks. |
 
-Slash commands can't carry `effort` in frontmatter. Set the session level once with `/effort high` or persist in `~/.claude/settings.json`:
-
-```json
-{ "effortLevel": "high" }
-```
-
-## What changed in August 2026
-
-Synced against the current Claude Code docs. Specialist memory is now scoped per project (`memory: user` → `local`) to keep codebase notes out of version control; a `SubagentStop` verification gate (`tsc --noEmit` + `eslint`) was added to `javascript-specialist` and `react-virtuoso` so broken code never folds back into the orchestrator; the stale note that the built-in Explore agent runs on Haiku was corrected (it inherits the session model as of v2.1.198); `/epc` was locked to manual invocation with `disable-model-invocation: true`; all four code specialists were pinned to Sonnet 5 (with a Sonnet-pinned `Explore` override) so a multi-agent fan-out doesn't drain the shared Opus/Sonnet usage pool on Pro; and an `env-artisan` agent was added for the terminal dev environment (Neovim/tmux/Alacritty/dotfiles), wired into `/epc` routing.
-
-Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md).
-
-## What changed in April 2026
-
-Adaptive reasoning + a lowered default effort silently degraded the previous version's quality. Fixed by adding `effort: high` and `memory: user` frontmatter to every subagent, removing token-budget instructions that suppressed thinking under the new model behavior, and restructuring `/epc` as a proper slash command.
-
-Full rationale, citations, and per-file changes in [MIGRATION.md](./MIGRATION.md).
+`effort: high` is the ceiling on Sonnet 5 (`xhigh`/`max` need Opus). Slash commands can't carry `effort`, so set it per session with `/effort high` or persist it: `{ "effortLevel": "high" }` in `~/.claude/settings.json`.
 
 ## Scope
 
-**Covered:** Frontend JS/TS, React, Jest/RTL, Playwright E2E (incl. CI/CD pipelines: GitHub Actions, Jenkins, Azure DevOps), native iOS (Swift, SwiftUI/UIKit, SwiftData, Swift 6 concurrency), Git workflows, and the terminal dev environment (Neovim, tmux, Alacritty, GNU Stow dotfiles).
+**Covered:** Frontend JS/TS, React, Jest/RTL, Playwright E2E (incl. CI/CD: GitHub Actions, Jenkins, Azure DevOps), Progressive Web Apps, and Git workflows.
 
-**Not covered:** Backend (beyond JS basics), Vue/Svelte/Angular, Cypress, infrastructure/DevOps, Android & cross-platform mobile (React Native/Flutter), games.
+**Not covered:** Backend (beyond JS basics), Vue/Svelte/Angular, Cypress, infrastructure/DevOps, native & cross-platform mobile (iOS, Android, React Native/Flutter), games.
 
-## Credits
+## Credits & license
 
-Agents and `/epc` orchestrator are original to this repo.
-
-For attribution of the optional `karpathy-guidelines` companion skill, see [COMPANIONS.md](./COMPANIONS.md#karpathy-guidelines-skill).
-
-## License
-
-MIT for the core system. The companion skill retains the original MIT license of the upstream work.
+Agents, the `/epc` orchestrator, and the project commands are original to this repo. MIT for the core system; companion skills retain their upstream licenses — see [COMPANIONS.md](./COMPANIONS.md).
